@@ -3,9 +3,9 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, theora, webm, flowplayer, skins
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 1.1
+Stable tag: 1.2
 
-The Secure HTML5 Video Player plugin allows you play HTML5 video on modern browsers with the Flowplayer and VideoJS players.  Settings can be easily configured with a control panel and simplified short codes.  Video files can be served privately; pseudo-streamed from a secured directory. 
+Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory.
 
 == Description ==
 
@@ -96,6 +96,9 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 1.2 =
+* Corrected FAQ to adhere to Wordpress.org's standards.
+
 = 1.1 =
 * Added support for playing videos in widgets.
 * Added support for looping videos.
@@ -111,6 +114,9 @@ Video Shortcode Examples
 
 == Upgrade Notice ==
 
+= 1.2 =
+Documentation correction to 1.1 release.
+
 = 1.1 =
 Adds widget support, looping and additional documentation.  Corrects tag formatting so that they are more standards compliant.
 
@@ -120,30 +126,21 @@ First release
 
 == Frequently Asked Questions ==
 
-= Why isn't it working in IE and Safari? =
-
-Q: <em>The plugin is working in Opera and Firefox, but not in IE and Safari. (I haven't tested in any more browsers than that.)  I'm using an .ogv file with the shortcode <code>[video ogg="vts.ogv"]</code> Can you tellme how come it's not working in IE and Safari. IE is almost a given, since there's always trouble with that, but I would think there would be no problem in Safari? </em><br/><br/>
-
-Q: <em>I am installed your plugin and it works fine in Safari, but not in IE and Firefox. It shows only a white screen with "2008-2011″ and plays the sound. Could it be that the browser or the tool doesn't support mp4??  Also I am trying to center it on the page without having to edit the template source css.  beautiful tool if it can work in Firefox and IE!</em><br/><br/>
+= Why isn't it working in Firefox? =
 	
-A: On Firefox, you'll have to convert the mp4 file to OGV format to get it to play in HTML5 video format. If your video is not playing in IE 8, then its likely your mp4 file is not in the proper encoding scheme compatible with HTML5 video. It has to be in h.264 format. See: <a href="http://diveintohtml5.org/video.html" target="_blank">http://diveintohtml5.org/video.html</a> for more information. <br/><br/>  
-Q: <em>I can't see the plugin in Safari and IE. I know IE that I need to use ogv for most browsers (so I am) and mp4 for IE. But how can I create a shortcode in the page/post with both ogv and mp4 options available, so there won't be two instances of the video in one page/post? And also, why doesn't it work in Safari? I thought ogv was compatible with this browser :/ </em><br/><br/>
-		
-Q: <em>I now have it working in Safari using <code>[video ogg="vts.ogv" mp4="vts.mp4"] </code> but still no luck in IE </em><br/><br/>  A: If your video is not playing in IE 8, then its likely your mp4 file is not in the proper encoding scheme compatible with HTML5 video. It has to be in h.264 format. See: <a href="http://diveintohtml5.org/video.html" target="_blank">http://diveintohtml5.org/video.html</a> for more information. <br/><br/>
+On Firefox, you'll have to convert the mp4 file to OGV format to get it to play in HTML5 video format. If your video is not playing in IE 8, then its likely your mp4 file is not in the proper encoding scheme compatible with HTML5 video. It has to be in h.264 format. See: <a href="http://diveintohtml5.info/video.html" target="_blank">http://diveintohtml5.info/video.html</a> for more information.
 
+= Why isn't it working in IE or Safari? =
 
-= How do I secure my videos? =
+If your video is not playing in IE 8, then its likely your mp4 file is not in the proper encoding scheme compatible with HTML5 video. It has to be in h.264 format. See: <a href="http://diveintohtml5.info/video.html" target="_blank">http://diveintohtml5.info/video.html</a> for more information. 
 
-Q: <em>Can't get the "secure" part to work in IE9. I have the videos up a level from public_html. All works fine in FireFox... meaning, if you right click and save video, in FireFox you see getvideo.php but in IE9, you can download the .mp4. EVEN here on your page. Any ideas to fix???</em><br/><br/>
+= How do I secure my videos? =
 
-A: We use the Secure HTML5 Video Player with another plugin, cart66, that handles access to the pages that have the videos. That way, only members can see the videos. I personally don't have a problem with them saving the mp4, if they are on a page that they are allowed to be on. For some, it could be a feature. <br/><br/>
-
+We use the Secure HTML5 Video Player with another plugin, cart66, that handles access to the pages that have the videos. That way, only members can see the videos. Another option is to password protect the post where the video short-tag is used.  We personally don't have a problem with them saving the mp4, if they are on a page that they are allowed to be on. For some, it could be a feature. 
 
 = How do I get the video to loop? =
 
-Q: <em>Hey guys how to you get a video to loop??  Have tried loop in options no joy.</em><br/><br/>
-
-Q: <em>Great plugin! I would like to add a continuous loop to a video if possible.  Thanks!</em><br/><br/>
-
-A: Unfortunately, the video loop attribute is not support across all browsers consistently.  For the browsers that support it, we now provide a loop attribute for the short tag.  If you set it to "yes", it should loop the video on HTML5 compliant browsers.  On other browsers, this jQuery statement should work as a workaround: 
-<code>jQuery("video").bind('ended', function(){     this.play(); });</code><br/><br/>  
+We recently implemented a loop option in the short tag and preferences.  For the browsers that support it, we now provide a loop attribute for the short tag.  If you set it to "yes", it should loop the video on HTML5 compliant browsers.  On other browsers, this jQuery statement should work as a workaround: 
+<code>jQuery("video").bind('ended', function(){
+    this.play();
+});</code>
