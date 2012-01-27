@@ -17,7 +17,7 @@ define('WP_USE_THEMES', false);
 define( 'ABSPATH', secure_html5_video_player_parent_path_with_file(__FILE__, 'wp-config.php', 10) . '/');
 
 require_once( ABSPATH . 'wp-config.php' );
-require_once('functions.php');
+require_once('sh5vp-functions.php');
 
 $filename = $_GET['file'];
 
