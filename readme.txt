@@ -1,9 +1,9 @@
 === Secure HTML5 Video Player ===
 Contributors: Lucinda Brown, Jinsoo Kang
-Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, theora, webm, flowplayer, skins
+Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, theora, webm, flowplayer, skins, media server
 Requires at least: 3.0
-Tested up to: 3.3.1
-Stable tag: 1.2
+Tested up to: 3.4.1
+Stable tag: 2.0
 
 Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory.
 
@@ -31,6 +31,16 @@ Video Shortcode Options
 The file name of the video without the file extension. The video directory set in the control panel is searched for files with this name and with file extensions: mp4, m4v, ogv, ogg, theora.ogv, webm, png, jpg, jpeg, and gif. The files that match are automatically used in the video tag and poster displayed in the page. For example, if you have videos: myclip.mp4, myclip.ogv, myclip.webm, and the poster image: myclip.png; you need only set a file value of "myclip".
 
     [video file="myclip"]
+
+### vimeo
+The Vimeo video ID.  A Vimeo video can be used as the primary video, with the HTML5 video as a fallback mechanism if the video is not available on the Vimeo service.  A Vimeo video can alternatively be used as the fallback when a specifed HTML5 video is not available.
+
+    [video vimeo="46623590"]
+
+### youtube
+The Youtube video ID.  A Youtube video can be used as the primary video, with the HTML5 video as a fallback mechanism if the video is not available on the Youtube service.  A Youtube video can alternatively be used as the fallback when a specifed HTML5 video is not available.
+
+    [video youtube="u1zgFlCw8Aw"]
 
 ### mp4
 The file name or URL of the h.264/MP4 source for the video.
@@ -65,12 +75,12 @@ The height of the video.
 ### preload
 Start loading the video as soon as possible, before the user clicks play.
 
-    [video preload="true"]
+    [video preload="yes"]
 
 ### autoplay
 Start playing the video as soon as it's ready.
 
-    [video autoplay="true"]
+    [video autoplay="yes"]
 
 
 Video Shortcode Examples
@@ -83,8 +93,8 @@ Video Shortcode Examples
 
     [video file="video_clip"]
 
-### Video File Example using custom settings
-    [video file="video_clip" preload="yes" autoplay="yes" width="1600" height="900"]
+### Video File Example using custom settings, with Youtube set as a fallback
+    [video file="video_clip" youtube="u1zgFlCw8Aw" preload="yes" autoplay="yes" width="1600" height="900"]
 
 
 == Screenshots ==
@@ -92,9 +102,18 @@ Video Shortcode Examples
 1. Server settings
 2. Playback and compatibility settings
 3. Shortcode options and examples
-
+4. Post or page featured video interface
+5. Widget interface
 
 == Changelog ==
+
+= 2.0 =
+* Added support for media servers.
+* Added support for external video services (Youtube and Vimeo) as primary or fallback media.
+* Added a native skin option to use the default player interface in the browser.
+* Added localization support.
+* Corrected detection of files ending with: .theora.ogv
+* Corrected autoplay support
 
 = 1.2 =
 * Corrected FAQ to adhere to Wordpress.org's standards.
@@ -114,6 +133,9 @@ Video Shortcode Examples
 
 == Upgrade Notice ==
 
+= 2.0 =
+Added support for media servers, external video services, a native skin option and localization.  Fixed autoplay and file detection issues.
+
 = 1.2 =
 Documentation correction to 1.1 release.
 
@@ -128,7 +150,7 @@ First release
 
 = Why isn't it working in Firefox? =
 	
-On Firefox, you'll have to convert the mp4 file to OGV format to get it to play in HTML5 video format. If your video is not playing in IE 8, then its likely your mp4 file is not in the proper encoding scheme compatible with HTML5 video. It has to be in h.264 format. See: <a href="http://diveintohtml5.info/video.html" target="_blank">http://diveintohtml5.info/video.html</a> for more information.
+On Firefox, you'll have to convert the mp4 file to OGV format to get it to play in HTML5 video format. See: <a href="http://diveintohtml5.info/video.html" target="_blank">http://diveintohtml5.info/video.html</a> for more information.
 
 = Why isn't it working in IE or Safari? =
 
@@ -138,9 +160,3 @@ If your video is not playing in IE 8, then its likely your mp4 file is not in th
 
 We use the Secure HTML5 Video Player with another plugin, cart66, that handles access to the pages that have the videos. That way, only members can see the videos. Another option is to password protect the post where the video short-tag is used.  We personally don't have a problem with them saving the mp4, if they are on a page that they are allowed to be on. For some, it could be a feature. 
 
-= How do I get the video to loop? =
-
-We recently implemented a loop option in the short tag and preferences.  For the browsers that support it, we now provide a loop attribute for the short tag.  If you set it to "yes", it should loop the video on HTML5 compliant browsers.  On other browsers, this jQuery statement should work as a workaround: 
-<code>jQuery("video").bind('ended', function(){
-    this.play();
-});</code>
