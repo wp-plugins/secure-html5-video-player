@@ -428,6 +428,7 @@ VideoJS.player.extend({
 
       // Build Interface
       this.buildStylesCheckDiv(); // Used to check if style are loaded
+      this.buildAndActivatePoster();
       this.buildBigPlayButton();
       this.buildAndActivateSpinner();
       this.buildAndActivateControlBar();
@@ -635,6 +636,24 @@ VideoJS.player.extend({
     });
     this.controls.appendChild(this.fullscreenControl);
     this.activateElement(this.fullscreenControl, "fullscreenToggle");
+  },
+  /* Poster Image
+  ================================================================================ */
+  buildAndActivatePoster: function(){
+    this.updatePosterSource();
+    if (this.video.poster) {
+      this.poster = document.createElement("img");
+      // Add poster to video box
+      this.box.appendChild(this.poster);
+
+      // Add poster image data
+      this.poster.src = this.video.poster;
+      // Add poster styles
+      this.poster.className = "vjs-poster";
+      this.activateElement(this.poster, "poster");
+    } else {
+      this.poster = false;
+    }
   },
   /* Big Play Button
   ================================================================================ */
