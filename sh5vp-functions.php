@@ -518,25 +518,15 @@ function secure_html5_video_player_options_form() {
 	print '<div class="postbox-container" style="width:70%;"><br/><h3>';
 	_e('Server', 'secure-html5-video-player');
 	print '</h3>';
-
-	$above_document_root = dirname($_SERVER['DOCUMENT_ROOT']);
-	if (strpos($_SERVER['DOCUMENT_ROOT'], '/public_html/') !== FALSE) {
-		$above_document_root = secure_html5_video_player_parent_path_with_file($_SERVER['DOCUMENT_ROOT'], 'public_html', 10);
-	}
-	else if (strpos($_SERVER['DOCUMENT_ROOT'], '/www/') !== FALSE) {
-		$above_document_root = secure_html5_video_player_parent_path_with_file($_SERVER['DOCUMENT_ROOT'], 'www', 10);
-	}
-
 	?>
 	<label for='secure_html5_video_player_video_dir'><?php _e('Video directory', 'secure-html5-video-player'); ?></label><br/>
 	<input type='text' id="secure_html5_video_player_video_dir" name='secure_html5_video_player_video_dir' size='100' value='<?php print $secure_html5_video_player_video_dir ?>' /><br/>
 	<small>
 	<?php 
 	printf(
-		__('The directory on the website where videos are stored.  Your public_html directory is: %1$s. If videos should be protected, the video directory should either be a password protected directory under public_html like: %2$s; or a location outside of public_html, like: %3$s.  This is also where you will upload all of your videos, so it should be a location to where you can FTP large video files.  Your hosting control panel should have more information about creating directories protected from direct web access, and have the necessary functionality to configure them.', 'secure-html5-video-player'), 
+		__('The directory on the website where videos are stored.  Your public_html directory is: %1$s. If videos should be protected, the video directory should either be a password protected directory under public_html like: %2$s; or a location outside of public_html.  This is also where you will upload all of your videos, so it should be a location to where you can FTP large video files.  Your hosting control panel should have more information about creating directories protected from direct web access, and have the necessary functionality to configure them.', 'secure-html5-video-player'), 
 		'<code>' . $_SERVER['DOCUMENT_ROOT'] . '</code>',
-		'<code>' . $_SERVER['DOCUMENT_ROOT'] . '/videos</code>',
-		'<code>' . $above_document_root . '/videos</code>'
+		'<code>' . $_SERVER['DOCUMENT_ROOT'] . '/videos</code>'
 	);
 	?>
 	</small><br/><br/>
@@ -1154,7 +1144,7 @@ function secure_html5_video_player_parent_path_with_file($filepath, $needle, $li
 	$curr_path = dirname($filepath);
 	for ($i = 0; $i < $limit; $i++) {
 		$ls = scandir($curr_path);
-		if (in_array($needle, $ls)) return $curr_path;
+		if (isset($ls) && is_array($ls) && in_array($needle, $ls)) return $curr_path;
 		$curr_path = dirname($curr_path);
 	}
 	return NULL;

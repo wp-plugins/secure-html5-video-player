@@ -5,7 +5,7 @@ function secure_html5_video_player_parent_path_with_file($filepath, $needle, $li
 	$curr_path = dirname($filepath);
 	for ($i = 0; $i < $limit; $i++) {
 		$ls = scandir($curr_path);
-		if (in_array($needle, $ls)) return $curr_path;
+		if (isset($ls) && is_array($ls) && in_array($needle, $ls)) return $curr_path;
 		$curr_path = dirname($curr_path);
 	}
 	return NULL;

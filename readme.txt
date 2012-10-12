@@ -107,6 +107,9 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 2.2 =
+* Removed warning messages printed when detecting the installation path in the control panel.
+
 = 2.1 =
 * Corrected an issue where the poster image was not restored after the video plays.
 
@@ -135,6 +138,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 2.2 =
+Removed warning messages printed when detecting the installation path in the control panel.
 
 = 2.1 =
 Corrected an issue where the poster image was not restored after the video plays.
