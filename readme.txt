@@ -2,8 +2,8 @@
 Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, theora, webm, flowplayer, skins, media server
 Requires at least: 3.0
-Tested up to: 3.4.1
-Stable tag: 2.1
+Tested up to: 3.4.2
+Stable tag: 2.2
 
 Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory.
 
