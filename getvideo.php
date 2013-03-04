@@ -112,13 +112,13 @@ else {
 }
 
 
+$file_buffer_size = 1024;
+$video_serve_timeout_s = 3600; //1 hr 
 
-$chars_sent = 0;
+set_time_limit($video_serve_timeout_s); 
 while (!feof($fp)) {
-	set_time_limit(0);
-	$content = fread($fp, 1024);
+	$content = fread($fp, $file_buffer_size);
 	echo $content;
-	$chars_sent += strlen($content);
 	if (connection_aborted()) {
 		break;
 	}
@@ -126,6 +126,5 @@ while (!feof($fp)) {
 	ob_flush();
 }
 fclose($fp);
-
 
 ?>

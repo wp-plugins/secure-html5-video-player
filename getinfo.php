@@ -32,15 +32,34 @@ if ($_GET['k'] != $access_key) {
 
 header('Content-Type: text/plain');
 $secure_html5_video_player_video_dir = get_option('secure_html5_video_player_video_dir');
-$filepath = $secure_html5_video_player_video_dir . '/' . $filename;
+$plugin_dir = plugins_url('secure-html5-video-player');
 
+$filepath = $secure_html5_video_player_video_dir . '/' . $filename;
+$filename_no_ext = secure_html5_video_player_filename_no_ext($filename);
+
+
+$found = false;
 if ($info == 'exists') {
-	if (file_exists($filepath)) {
-		print '1';
+	
+	$secure_html5_video_player_video_dir = get_option('secure_html5_video_player_video_dir');
+	if (is_dir($secure_html5_video_player_video_dir)) {
+		$dh = opendir($secure_html5_video_player_video_dir);
+		while (false !== ($curr_video_file = readdir($dh))) {
+			if (secure_html5_video_player_startsWith($curr_video_file, '.')) continue;
+			$ext = secure_html5_video_player_filename_get_ext($curr_video_file);
+			$normalized_ext = secure_html5_video_player_filename_get_normalized_ext($ext);
+			$start_check = $filename_no_ext . '.';
+			if (secure_html5_video_player_startsWith($curr_video_file, $start_check)) {
+				print $normalized_ext . '=' . secure_html5_video_player_media_url($secure_html5_video_player_video_dir, $plugin_dir, $access_key, $filename_no_ext, $ext) . "\n";
+				$found = true;
+			}		
+		}
 	}
-	else {
+	
+	if (!$found) {
 		print '0';
 	}
+	
 }
 else if ($info == 'list') {
 	$video_files = secure_html5_video_player_filelist(false);

@@ -1,15 +1,15 @@
 === Secure HTML5 Video Player ===
 Contributors: Lucinda Brown, Jinsoo Kang
-Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, theora, webm, flowplayer, skins, media server
+Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, flowplayer, skins, media server, youtube, vimeo
 Requires at least: 3.0
-Tested up to: 3.4.2
-Stable tag: 2.2
+Tested up to: 3.5.1
+Stable tag: 2.3
 
 Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory.
 
 == Description ==
 
-A video plugin for WordPress built on the VideoJS HTML5 video player library. Allows you to embed video in your post or page using HTML5 with Flash fallback support for non-HTML5 browsers.  Settings can be easily configured with a control panel and simplified short codes.  Video files can be served from a secured private directory. 
+A video plugin for WordPress built on the VideoJS HTML5 video player library. Allows you to embed video in your post or page using HTML5 with Flash fallback support for non-HTML5 browsers.  Settings can be easily configured with a control panel and simplified short codes.  Video files can be served from a secured private directory.  Youtube or Vimeo video may be used as a fallback mechanism, or as primary videos, with HTML5 videos acting as fallbacks should the posted videos go away.
 
 See <a href="http://www.trillamar.com/webcraft/secure-html5-video-player/">www.trillamar.com/secure-html5-video-player/</a> for additional information about Secure HTML5 Video Player.
 See <a href="http://videojs.com/">VideoJS.com</a> for additional information about VideoJS.
@@ -19,9 +19,10 @@ See <a href="http://flowplayer.org/">Flowplayer.org</a> for additional informati
 
 This section describes how to install the plugin and get it working.
 
-1. Upload the `secure-html5-video-player` folder to the `/wp-content/plugins/` directory
+1. Upload the 'secure-html5-video-player' folder to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Use the [video] shortcode in your post or page using the following options.
+3. Make sure your webserver is configured so that 'video/ogg' and 'video/webm' are recognized file types.
+4. Use the [video] shortcode in your post or page using the following options.
 
 
 Video Shortcode Options
@@ -107,6 +108,10 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 2.3 =
+* Optimized videos so that they're served from cached directories and filenames. This dramatically improves the performance on hosting providers that limit the resources allocated to PHP scripts.
+* Corrected compatibility problems with "W3 Total Cache".
+
 = 2.2 =
 * Removed warning messages printed when detecting the installation path in the control panel.
 
@@ -138,6 +143,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 2.3 =
+Optimized videos so that they're primarily served from cached directories and filenames. This dramatically improves the performance on hosting providers that limit the resources allocated to PHP scripts.
 
 = 2.2 =
 Removed warning messages printed when detecting the installation path in the control panel.
