@@ -3,7 +3,7 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, flowplayer, skins, media server, youtube, vimeo
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 2.4
+Stable tag: 2.5
 
 Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory.
 
@@ -29,7 +29,7 @@ Video Shortcode Options
 -----------------------
 
 ### file
-The file name of the video without the file extension. The video directory set in the control panel is searched for files with this name and with file extensions: mp4, m4v, ogv, ogg, theora.ogv, webm, png, jpg, jpeg, and gif. The files that match are automatically used in the video tag and poster displayed in the page. For example, if you have videos: myclip.mp4, myclip.ogv, myclip.webm, and the poster image: myclip.png; you need only set a file value of "myclip". To select a video in a subdirectoy of the video directory, use the relative path to the video file from the video directory.
+The file name of the video without the file extension. The video directory set in the control panel is searched for files with this name and with file extensions: mp4, m4v, ogv, ogg, theora.ogv, webm, png, jpg, jpeg, and gif. The files that match are automatically used in the video tag and poster displayed in the page. For example, if you have videos: myclip.mp4, myclip.ogv, myclip.webm, and the poster image: myclip.png; you need only set a file value of "myclip". To select a video in a subdirectory within the video directory, use the relative path to the video file from the video directory.
 
     [video file="myclip"]
 
@@ -113,6 +113,9 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 2.5 =
+* Fixed a typo in the help section.
+
 = 2.4 =
 * Made file caching an optional setting over the legacy pseudo streaming via PHP.
 * Organized settings into tabs.
@@ -156,6 +159,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 2.5 = 
+Made file caching an optional setting over the legacy pseudo streaming via PHP. Organized settings into tabs. Added option to always display video download links. Improved fallback behavior with native skin. Added support for organization of videos into folders for secured video files. Optimized storage of featured video meta data. Fixed a typo in the help section.
 
 = 2.4 = 
 Made file caching an optional setting over the legacy pseudo streaming via PHP. Organized settings into tabs. Added option to always display video download links. Improved fallback behavior with native skin. Added support for organization of videos into folders for secured video files. Optimized storage of featured video meta data.

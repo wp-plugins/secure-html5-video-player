@@ -315,7 +315,7 @@ function secure_html5_video_player_options_help() {
 	print '<p>';
 	print '<h3>file</h3>';
 	printf(
-		__('The file name of the video without the file extension.  The video directory set in the control panel is searched for files with this name and with file extensions: mp4, m4v, ogv, ogg, theora.ogv, webm, png, jpg, jpeg, and gif.  The files that match are automatically used in the video tag and poster displayed in the page.  For example, if you have videos: %1$s, %2$s, %3$s, and the poster image: %4$s; you need only set a file value of %5$s. To select a video in a subdirectoy of the video directory, use the relative path to the video file from the video directory.', 'secure-html5-video-player'), 
+		__('The file name of the video without the file extension.  The video directory set in the control panel is searched for files with this name and with file extensions: mp4, m4v, ogv, ogg, theora.ogv, webm, png, jpg, jpeg, and gif.  The files that match are automatically used in the video tag and poster displayed in the page.  For example, if you have videos: %1$s, %2$s, %3$s, and the poster image: %4$s; you need only set a file value of %5$s. To select a video in a subdirectory within the video directory, use the relative path to the video file from the video directory.', 'secure-html5-video-player'), 
 		'<b>myclip.mp4</b>', 
 		'<b>myclip.ogv</b>', 
 		'<b>myclip.webm</b>', 
