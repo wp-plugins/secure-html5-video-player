@@ -142,7 +142,9 @@ function secure_html5_video_player_inner_custom_box($post) {
 	</td>
 </tr>
 </table>
-<p>To use the video in your template, call the function: <code>get_sh5vp_featured_video($post_id, $width, $height)</code>, which returns the appropriate video tag.  Or call: <code>sh5vp_featured_video($post_id, $width, $height)</code> which prints the appropriate video tag.  The arguments: <code>$width</code> and <code>$height</code> are optional, and taken from the settings above if not specified.</p>
+<p><?php 
+		_e('To use the video in your template, call the function: <code>get_sh5vp_featured_video($post_id, $width, $height)</code>, which returns the appropriate video tag.  Or call: <code>sh5vp_featured_video($post_id, $width, $height)</code> which prints the appropriate video tag.  The arguments: <code>$width</code> and <code>$height</code> are optional, and taken from the settings above if not specified.', 'secure-html5-video-player')
+?></p>
 <?php
 }
 endif;
@@ -174,14 +176,26 @@ function secure_html5_video_player_save_postdata( $post_id ) {
 	if (!$save_preload) $save_preload = 'no';
 	if (!$save_autoplay) $save_autoplay = 'no';
 	if (!$save_loop) $save_loop = 'no';
-	update_post_meta($post_id, "sh5vp-video", $_POST['sh5vp-video']);
-	update_post_meta($post_id, "sh5vp-youtube_video_id", $_POST['sh5vp-youtube_video_id']);
-	update_post_meta($post_id, "sh5vp-vimeo_video_id", $_POST['sh5vp-vimeo_video_id']);
-	update_post_meta($post_id, "sh5vp-width", $_POST['sh5vp-width']);
-	update_post_meta($post_id, "sh5vp-height", $_POST['sh5vp-height']);
-	update_post_meta($post_id, "sh5vp-preload", $save_preload);
-	update_post_meta($post_id, "sh5vp-autoplay", $save_autoplay);
-	update_post_meta($post_id, "sh5vp-loop", $save_loop);
+	if (!$_POST['sh5vp-video'] && !$_POST['sh5vp-youtube_video_id'] && !$_POST['sh5vp-vimeo_video_id']) {
+		delete_post_meta($post_id, "sh5vp-video");
+		delete_post_meta($post_id, "sh5vp-youtube_video_id");
+		delete_post_meta($post_id, "sh5vp-vimeo_video_id");
+		delete_post_meta($post_id, "sh5vp-width");
+		delete_post_meta($post_id, "sh5vp-height");
+		delete_post_meta($post_id, "sh5vp-preload");
+		delete_post_meta($post_id, "sh5vp-autoplay");
+		delete_post_meta($post_id, "sh5vp-loop");
+	}
+	else {
+		update_post_meta($post_id, "sh5vp-video", $_POST['sh5vp-video']);
+		update_post_meta($post_id, "sh5vp-youtube_video_id", $_POST['sh5vp-youtube_video_id']);
+		update_post_meta($post_id, "sh5vp-vimeo_video_id", $_POST['sh5vp-vimeo_video_id']);
+		update_post_meta($post_id, "sh5vp-width", $_POST['sh5vp-width']);
+		update_post_meta($post_id, "sh5vp-height", $_POST['sh5vp-height']);
+		update_post_meta($post_id, "sh5vp-preload", $save_preload);
+		update_post_meta($post_id, "sh5vp-autoplay", $save_autoplay);
+		update_post_meta($post_id, "sh5vp-loop", $save_loop);
+	}
 }
 endif;
 

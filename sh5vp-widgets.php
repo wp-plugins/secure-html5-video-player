@@ -11,7 +11,6 @@ class secure_html5_video_player_widget extends WP_Widget {
 		);
 		$control_ops = array(
 			'width' => 400
-		//	'height' => 350
 		);
 		$this->WP_Widget(false, __('Secure HTML5 Video Player', 'secure-html5-video-player'), $widget_ops, $control_ops);
 	}

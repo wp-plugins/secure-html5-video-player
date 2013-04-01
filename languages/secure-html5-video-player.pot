@@ -1,39 +1,42 @@
-# Copyright (C) 2012 Secure HTML5 Video Player
-# This file is distributed under the same license as the Secure HTML5 Video Player package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Secure HTML5 Video Player 2.0\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/secure-html5-video-player\n"
-"POT-Creation-Date: 2012-04-19 22:55:38+00:00\n"
+"Project-Id-Version: Secure HTML5 Video Player\n"
+"POT-Creation-Date: 2013-03-31 23:37-0800\n"
+"PO-Revision-Date: 2013-03-31 23:38-0800\n"
+"Last-Translator: \n"
+"Language-Team: Lucinda Brown, Jinsoo Kang <info@trillamar.com>\n"
+"Language: English\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: ."
+"plugins/secure-html5-video-player\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: secure-html5-video-player\n"
 
-#: secure-html5-video-player/secure-html5-video-player.php:35
 #: secure-html5-video-player/secure-html5-video-player.php:36
-#: secure-html5-video-player/sh5vp-functions.php:214
-#: secure-html5-video-player/sh5vp-metabox.php:14
-#: secure-html5-video-player/sh5vp-metabox.php:20
-#: secure-html5-video-player/sh5vp-widgets.php:16
+#: secure-html5-video-player/secure-html5-video-player.php:37
+#: secure-html5-video-player/sh5vp-functions.php:268
+#: secure-html5-video-player/sh5vp-metabox.php:16
+#: secure-html5-video-player/sh5vp-widgets.php:15
 msgid "Secure HTML5 Video Player"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:8
+#: secure-html5-video-player/sh5vp-functions.php:7
 msgid "Settings"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:225
+#: secure-html5-video-player/sh5vp-functions.php:279
 msgid "Contributors"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:227
+#: secure-html5-video-player/sh5vp-functions.php:281
 msgid "Plugin page"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:229
+#: secure-html5-video-player/sh5vp-functions.php:283
 msgid ""
 "Secure HTML5 Video Player is a video plugin for WordPress built on the "
 "VideoJS HTML5 video player library. It allows you to embed video in your "
@@ -43,35 +46,31 @@ msgid ""
 "be served privately; pseudo-streamed from a secured directory."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:232
+#: secure-html5-video-player/sh5vp-functions.php:286
 #, php-format
 msgid "See %s for additional information about Secure HTML5 Video Player."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:237
+#: secure-html5-video-player/sh5vp-functions.php:291
 #, php-format
 msgid "See %s for additional information about VideoJS."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:242
+#: secure-html5-video-player/sh5vp-functions.php:296
 #, php-format
 msgid "See %s for additional information about Flowplayer."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:247
-#: secure-html5-video-player/sh5vp-functions.php:321
-#: secure-html5-video-player/sh5vp-functions.php:609
-#: secure-html5-video-player/sh5vp-functions.php:678
-#: secure-html5-video-player/sh5vp-functions.php:695
+#: secure-html5-video-player/sh5vp-functions.php:301
+#: secure-html5-video-player/sh5vp-functions.php:305
 msgid "Save the options"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:253
-#: secure-html5-video-player/sh5vp-functions.php:312
+#: secure-html5-video-player/sh5vp-functions.php:315
 msgid "Video Shortcode Options"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:258
+#: secure-html5-video-player/sh5vp-functions.php:320
 #, php-format
 msgid ""
 "The file name of the video without the file extension.  The video directory "
@@ -79,10 +78,12 @@ msgid ""
 "extensions: mp4, m4v, ogv, ogg, theora.ogv, webm, png, jpg, jpeg, and gif.  "
 "The files that match are automatically used in the video tag and poster "
 "displayed in the page.  For example, if you have videos: %1$s, %2$s, %3$s, "
-"and the poster image: %4$s; you need only set a file value of %5$s."
+"and the poster image: %4$s; you need only set a file value of %5$s. To "
+"select a video in a subdirectoy of the video directory, use the relative "
+"path to the video file from the video directory."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:268
+#: secure-html5-video-player/sh5vp-functions.php:331
 msgid ""
 "The Vimeo video ID.  A Vimeo video can be used as the primary video, with "
 "the HTML5 video as a fallback mechanism if the video is not available on the "
@@ -90,7 +91,7 @@ msgid ""
 "a specifed HTML5 video is not available."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:272
+#: secure-html5-video-player/sh5vp-functions.php:335
 msgid ""
 "The Youtube video ID.  A Youtube video can be used as the primary video, "
 "with the HTML5 video as a fallback mechanism if the video is not available "
@@ -98,86 +99,86 @@ msgid ""
 "fallback when a specifed HTML5 video is not available."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:276
+#: secure-html5-video-player/sh5vp-functions.php:339
 msgid "The file name or URL of the h.264/MP4 source for the video."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:280
+#: secure-html5-video-player/sh5vp-functions.php:343
 msgid "The file name or URL of the Ogg/Theora source for the video."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:284
+#: secure-html5-video-player/sh5vp-functions.php:347
 msgid "The file name or URL of the VP8/WebM source for the video."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:288
+#: secure-html5-video-player/sh5vp-functions.php:351
 msgid "The file name or URL of the poster frame for the video."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:292
+#: secure-html5-video-player/sh5vp-functions.php:355
 msgid "The width of the video."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:296
+#: secure-html5-video-player/sh5vp-functions.php:359
 msgid "The height of the video."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:300
+#: secure-html5-video-player/sh5vp-functions.php:363
 msgid ""
 "Start loading the video as soon as possible, before the user clicks play."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:304
+#: secure-html5-video-player/sh5vp-functions.php:367
 msgid "Start playing the video as soon as it is ready."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:308
+#: secure-html5-video-player/sh5vp-functions.php:371
 msgid "Replay the video from the beginning after it completes playing."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:314
+#: secure-html5-video-player/sh5vp-functions.php:375
+msgid "Examples"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:379
 msgid "Video URL example"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:316
+#: secure-html5-video-player/sh5vp-functions.php:381
 msgid "Video File Example using default settings"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:318
+#: secure-html5-video-player/sh5vp-functions.php:383
 msgid "Video File Example using custom settings"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:516
-msgid "Server"
-msgstr ""
-
-#: secure-html5-video-player/sh5vp-functions.php:528
+#: secure-html5-video-player/sh5vp-functions.php:525
 msgid "Video directory"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:533
+#: secure-html5-video-player/sh5vp-functions.php:530
 #, php-format
 msgid ""
 "The directory on the website where videos are stored.  Your public_html "
 "directory is: %1$s. If videos should be protected, the video directory "
 "should either be a password protected directory under public_html like: "
-"%2$s; or a location outside of public_html, like: %3$s.  This is also where "
-"you will upload all of your videos, so it should be a location to where you "
-"can FTP large video files.  Your hosting control panel should have more "
-"information about creating directories protected from direct web access, and "
-"have the necessary functionality to configure them."
+"%2$s; or a location outside of public_html.  This is also where you will "
+"upload all of your videos, so it should be a location to where you can FTP "
+"large video files.  Your hosting control panel should have more information "
+"about creating directories protected from direct web access, and have the "
+"necessary functionality to configure them."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:541
+#: secure-html5-video-player/sh5vp-functions.php:537
 msgid "Secure seed"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:544
-#: secure-html5-video-player/sh5vp-functions.php:560
+#: secure-html5-video-player/sh5vp-functions.php:540
+#: secure-html5-video-player/sh5vp-functions.php:546
 msgid "Generate Seed"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:559
+#: secure-html5-video-player/sh5vp-functions.php:545
 #, php-format
 msgid ""
 "Arbitrary text used to generate session keys for secure video downloads.  "
@@ -186,44 +187,108 @@ msgid ""
 "server(s), this value should be the same across all of them."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:566
+#: secure-html5-video-player/sh5vp-functions.php:576
 msgid "Allow Youtube or Vimeo to be displayed"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:573
+#: secure-html5-video-player/sh5vp-functions.php:582
+#: secure-html5-video-player/sh5vp-functions.php:638
 msgid "Never"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:579
+#: secure-html5-video-player/sh5vp-functions.php:588
 msgid "As a fallback, when HTML5 video is not present"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:585
+#: secure-html5-video-player/sh5vp-functions.php:594
 msgid ""
 "As the primary, but use HTML5 video when the Youtube/Vimeo video is not "
 "available"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:587
+#: secure-html5-video-player/sh5vp-functions.php:595
 msgid ""
 "Allows you to define when Youtube or Vimeo is used as a fallback or as the "
 "primary video."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:592
+#: secure-html5-video-player/sh5vp-functions.php:607
+msgid "Enable Flash fallback"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:609
+msgid ""
+"If checked, Flowplayer will act as a fallback for non-html5 compliant "
+"browsers."
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:632
+msgid "Enable Video Download Links"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:644
+msgid "As a fallback, when HTML5 video cannot be played"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:650
+msgid "Always"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:651
+msgid ""
+"Allows you to enable or disable download links when the video cannot be "
+"played. Select [always] if download links should appear all the time."
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:675
+msgid "Video File Serving Methodology"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:681
+msgid "Serve from cached files"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:687
+msgid "Serve dynamically"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:688
+msgid ""
+"If [serve from cached files] is selected, the video files are copied as "
+"needed to a temporary cache directory, and served directly to the client "
+"using the webserver.  Otherwise, the original video files are loaded and "
+"served indirectly using PHP."
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:689
+msgid ""
+"For hosting providers that place limits on the resources available to PHP, "
+"serving dynamically should not chosen because it would not scale well. "
+"Choose [serve from cached files] so that the act of serving the video files "
+"is handled by the webserver rather than by PHP."
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:690
+msgid ""
+"Caching requires considerable amount of free drive space - at most 2x the "
+"space of the videos being served.  If hard disk space is limited, select "
+"[serve dynamically]."
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:703
 msgid "Enable media servers"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:594
+#: secure-html5-video-player/sh5vp-functions.php:705
 msgid ""
 "If checked, media is permitted to be loaded from the listed media servers. "
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:598
+#: secure-html5-video-player/sh5vp-functions.php:707
 msgid "Media servers"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:603
+#: secure-html5-video-player/sh5vp-functions.php:712
 #, php-format
 msgid ""
 "A list of media server URLs that serve the media files.  Each URL should be "
@@ -234,48 +299,44 @@ msgid ""
 "must have the same secure seed."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:611
-msgid "Playback"
-msgstr ""
-
-#: secure-html5-video-player/sh5vp-functions.php:612
+#: secure-html5-video-player/sh5vp-functions.php:731
 msgid "Default width"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:616
+#: secure-html5-video-player/sh5vp-functions.php:735
 #, php-format
 msgid ""
 "Default video width.  Can be overrided by setting the %s attribute in the "
 "short tag."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:622
+#: secure-html5-video-player/sh5vp-functions.php:741
 msgid "Default height"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:626
+#: secure-html5-video-player/sh5vp-functions.php:745
 #, php-format
 msgid ""
 "Default video height.  Can be overrided by setting the %s attribute in the "
 "short tag."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:632
+#: secure-html5-video-player/sh5vp-functions.php:751
 msgid "Preload video"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:636
+#: secure-html5-video-player/sh5vp-functions.php:755
 #, php-format
 msgid ""
 "If checked, the video will preload by default.  Can be overrided by setting "
 "the %1$s attribute in the short tag to %2$s or %3$s."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:644
+#: secure-html5-video-player/sh5vp-functions.php:763
 msgid "Autoplay video"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:648
+#: secure-html5-video-player/sh5vp-functions.php:767
 #, php-format
 msgid ""
 "If checked, the video start playing automatically when the page is loaded.  "
@@ -283,121 +344,121 @@ msgid ""
 "%3$s."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:656
+#: secure-html5-video-player/sh5vp-functions.php:775
 msgid "Loop video"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:660
+#: secure-html5-video-player/sh5vp-functions.php:779
 #, php-format
 msgid ""
 "If checked, the video will play again after it finishes.  Can be overrided "
 "by setting the %1$s attribute in the short tag to %2$s or %3$s."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:667
+#: secure-html5-video-player/sh5vp-functions.php:801
 msgid "Player Skin"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:669
-msgid "tube"
+#: secure-html5-video-player/sh5vp-functions.php:808
+msgid ""
+"The look and feel of the HTML5 video player. Select [native] to use the "
+"browser's default video player appearance."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:670
-msgid "vim"
+#: secure-html5-video-player/sh5vp-functions.php:840
+msgid "Security"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:671
-msgid "hu"
+#: secure-html5-video-player/sh5vp-functions.php:843
+msgid "Caching"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:672
-msgid "videojs"
+#: secure-html5-video-player/sh5vp-functions.php:846
+msgid "Media Server"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:673
-msgid "native"
+#: secure-html5-video-player/sh5vp-functions.php:849
+msgid "Youtube/Vimeo"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:675
-msgid "The visual appearance of the HTML5 video player."
+#: secure-html5-video-player/sh5vp-functions.php:852
+msgid "Playback"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:680
+#: secure-html5-video-player/sh5vp-functions.php:855
+msgid "Skin"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-functions.php:858
 msgid "Compatibility"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:683
-msgid "Enable Flash fallback"
+#: secure-html5-video-player/sh5vp-functions.php:861
+msgid "Help"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-functions.php:685
-msgid ""
-"If checked, Flowplayer will act as a fallback for non-html5 compliant "
-"browsers."
-msgstr ""
-
-#: secure-html5-video-player/sh5vp-functions.php:689
-msgid "Enable download fallback"
-msgstr ""
-
-#: secure-html5-video-player/sh5vp-functions.php:691
-msgid ""
-"If checked, video download links will act as a fallback for non compliant "
-"browsers."
-msgstr ""
-
-#: secure-html5-video-player/sh5vp-functions.php:1089
+#: secure-html5-video-player/sh5vp-functions.php:1353
 msgid "file not found"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-metabox.php:61
-#: secure-html5-video-player/sh5vp-widgets.php:102
+#: secure-html5-video-player/sh5vp-metabox.php:58
+#: secure-html5-video-player/sh5vp-widgets.php:101
 msgid "Video"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-metabox.php:84
-#: secure-html5-video-player/sh5vp-widgets.php:127
+#: secure-html5-video-player/sh5vp-metabox.php:81
+#: secure-html5-video-player/sh5vp-widgets.php:126
 msgid "Youtube video ID"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-metabox.php:91
-#: secure-html5-video-player/sh5vp-widgets.php:137
+#: secure-html5-video-player/sh5vp-metabox.php:88
+#: secure-html5-video-player/sh5vp-widgets.php:136
 msgid "Vimeo video ID"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-metabox.php:98
-#: secure-html5-video-player/sh5vp-widgets.php:148
+#: secure-html5-video-player/sh5vp-metabox.php:95
+#: secure-html5-video-player/sh5vp-widgets.php:147
 msgid "Width"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-metabox.php:104
-#: secure-html5-video-player/sh5vp-widgets.php:154
+#: secure-html5-video-player/sh5vp-metabox.php:101
+#: secure-html5-video-player/sh5vp-widgets.php:153
 msgid "Height"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-metabox.php:117
-#: secure-html5-video-player/sh5vp-widgets.php:166
+#: secure-html5-video-player/sh5vp-metabox.php:114
+#: secure-html5-video-player/sh5vp-widgets.php:165
 msgid "Preload"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-metabox.php:130
-#: secure-html5-video-player/sh5vp-widgets.php:178
+#: secure-html5-video-player/sh5vp-metabox.php:127
+#: secure-html5-video-player/sh5vp-widgets.php:177
 msgid "Autoplay"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-metabox.php:143
-#: secure-html5-video-player/sh5vp-widgets.php:190
+#: secure-html5-video-player/sh5vp-metabox.php:140
+#: secure-html5-video-player/sh5vp-widgets.php:189
 msgid "Loop"
+msgstr ""
+
+#: secure-html5-video-player/sh5vp-metabox.php:146
+msgid ""
+"To use the video in your template, call the function: "
+"<code>get_sh5vp_featured_video($post_id, $width, $height)</code>, which "
+"returns the appropriate video tag.  Or call: <code>sh5vp_featured_video"
+"($post_id, $width, $height)</code> which prints the appropriate video tag.  "
+"The arguments: <code>$width</code> and <code>$height</code> are optional, "
+"and taken from the settings above if not specified."
 msgstr ""
 
 #: secure-html5-video-player/sh5vp-widgets.php:10
 msgid "A widget that plays HTML5 video."
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-widgets.php:93
+#: secure-html5-video-player/sh5vp-widgets.php:92
 msgid "Title"
 msgstr ""
 
-#: secure-html5-video-player/sh5vp-widgets.php:195
+#: secure-html5-video-player/sh5vp-widgets.php:194
 msgid "Caption (Text or HTML)"
 msgstr ""

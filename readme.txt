@@ -3,7 +3,7 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, flowplayer, skins, media server, youtube, vimeo
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 2.3
+Stable tag: 2.4
 
 Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory.
 
@@ -29,9 +29,12 @@ Video Shortcode Options
 -----------------------
 
 ### file
-The file name of the video without the file extension. The video directory set in the control panel is searched for files with this name and with file extensions: mp4, m4v, ogv, ogg, theora.ogv, webm, png, jpg, jpeg, and gif. The files that match are automatically used in the video tag and poster displayed in the page. For example, if you have videos: myclip.mp4, myclip.ogv, myclip.webm, and the poster image: myclip.png; you need only set a file value of "myclip".
+The file name of the video without the file extension. The video directory set in the control panel is searched for files with this name and with file extensions: mp4, m4v, ogv, ogg, theora.ogv, webm, png, jpg, jpeg, and gif. The files that match are automatically used in the video tag and poster displayed in the page. For example, if you have videos: myclip.mp4, myclip.ogv, myclip.webm, and the poster image: myclip.png; you need only set a file value of "myclip". To select a video in a subdirectoy of the video directory, use the relative path to the video file from the video directory.
 
     [video file="myclip"]
+
+    [video file="path/to/myclip"]
+
 
 ### vimeo
 The Vimeo video ID.  A Vimeo video can be used as the primary video, with the HTML5 video as a fallback mechanism if the video is not available on the Vimeo service.  A Vimeo video can alternatively be used as the fallback when a specifed HTML5 video is not available.
@@ -101,12 +104,22 @@ Video Shortcode Examples
 == Screenshots ==
 
 1. Server settings
-2. Playback and compatibility settings
-3. Shortcode options and examples
-4. Post or page featured video interface
-5. Widget interface
+2. Skin selection
+3. Playback settings
+4. Compatibility settings
+5. Shortcode options and examples
+6. Post or page featured video interface
+7. Widget interface
 
 == Changelog ==
+
+= 2.4 =
+* Made file caching an optional setting over the legacy pseudo streaming via PHP.
+* Organized settings into tabs.
+* Added option to always display video download links.
+* Improved fallback behavior with native skin.
+* Added support for organization of videos into folders for secured video files.
+* Optimized storage of featured video meta data.
 
 = 2.3 =
 * Optimized videos so that they're served from cached directories and filenames. This dramatically improves the performance on hosting providers that limit the resources allocated to PHP scripts.
@@ -143,6 +156,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 2.4 = 
+Made file caching an optional setting over the legacy pseudo streaming via PHP. Organized settings into tabs. Added option to always display video download links. Improved fallback behavior with native skin. Added support for organization of videos into folders for secured video files. Optimized storage of featured video meta data.
 
 = 2.3 =
 Optimized videos so that they're primarily served from cached directories and filenames. This dramatically improves the performance on hosting providers that limit the resources allocated to PHP scripts.
