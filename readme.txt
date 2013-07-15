@@ -1,15 +1,15 @@
 === Secure HTML5 Video Player ===
 Contributors: Lucinda Brown, Jinsoo Kang
-Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, flowplayer, skins, media server, youtube, vimeo
+Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, flowplayer, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
-Tested up to: 3.5.1
-Stable tag: 2.5
+Tested up to: 3.5.2
+Stable tag: 3.0
 
 Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory.
 
 == Description ==
 
-A video plugin for WordPress built on the VideoJS HTML5 video player library. Allows you to embed video in your post or page using HTML5 with Flash fallback support for non-HTML5 browsers.  Settings can be easily configured with a control panel and simplified short codes.  Video files can be served from a secured private directory.  Youtube or Vimeo video may be used as a fallback mechanism, or as primary videos, with HTML5 videos acting as fallbacks should the posted videos go away.
+A video plugin for WordPress built on the VideoJS HTML5 video player library. Allows you to embed video in your post or page using HTML5 with Flash fallback support for non-HTML5 browsers.  Settings can be easily configured with a control panel and simplified short codes.  Video files can be served from a secured private directory or from an Amazon S3 compatible file storage service.  Youtube or Vimeo video may be used as a fallback mechanism, or as primary videos, with HTML5 videos acting as fallbacks should the posted videos go away.
 
 See <a href="http://www.trillamar.com/webcraft/secure-html5-video-player/">www.trillamar.com/secure-html5-video-player/</a> for additional information about Secure HTML5 Video Player.
 See <a href="http://videojs.com/">VideoJS.com</a> for additional information about VideoJS.
@@ -21,8 +21,10 @@ This section describes how to install the plugin and get it working.
 
 1. Upload the 'secure-html5-video-player' folder to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Make sure your webserver is configured so that 'video/ogg' and 'video/webm' are recognized file types.
-4. Use the [video] shortcode in your post or page using the following options.
+3. If you are self serving videos from a cache directory, make sure your webserver is configured so that 'video/ogg' and 'video/webm' are recognized file types.
+4. In Settings -> Secure HTML5 Video Player, specify the directory (or the S3 service) where the videos are located.
+5. Upload your videos and images to the directory or service you specified.
+6. Use the [video] shortcode in your post or page using the following options.
 
 
 Video Shortcode Options
@@ -113,6 +115,11 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.0 =
+* Added support for Amazon S3 (and compatible file services) for video file storage and secured video serving.
+* Fixed an issue where uppercase file extension videos were not recognized.
+* Optimized temporary value cache to use APC, if available.
+
 = 2.5 =
 * Fixed a typo in the help section.
 
@@ -159,6 +166,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.0 =
+Added support for Amazon S3 (and compatible file services) for video file storage and secured video serving.  Fixed an issue where uppercase file extension videos were not recognized. Optimized temporary value cache to use APC, if available.
 
 = 2.5 = 
 Made file caching an optional setting over the legacy pseudo streaming via PHP. Organized settings into tabs. Added option to always display video download links. Improved fallback behavior with native skin. Added support for organization of videos into folders for secured video files. Optimized storage of featured video meta data. Fixed a typo in the help section.

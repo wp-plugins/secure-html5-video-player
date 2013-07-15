@@ -57,16 +57,24 @@ function secure_html5_video_player_inner_custom_box($post) {
 	<td><label for="sh5vp-video"><?php 
 		_e('Video', 'secure-html5-video-player');
 	?>:</label></td>
-	<td><?php
+	<td>
+		<?php
 		$video_files = secure_html5_video_player_filelist(true);
 		if (! empty($video_files)) {
-			?><select id="sh5vp-video" name="sh5vp-video" >						
+			?><select id="sh5vp-video" name="sh5vp-video" >
 			<option value=""></option>
 <?php
 			foreach ($video_files as $curr_video_file => $server_addr) {
-				?><option value="<?php print $curr_video_file; ?>" <?php if ($instance['video'] == $curr_video_file) {
-					?> selected="selected" <?php
-				} ?> ><?php print $curr_video_file; ?></option><?php
+				?><option value="<?php print $curr_video_file; ?>" <?php 
+					if ($instance['video'] == $curr_video_file) {
+						?> selected="selected" <?php
+					} 
+				?> ><?php 
+					print $curr_video_file;
+					//if (count($server_addr) > 0) {
+					//	print ' (' . implode(', ', $server_addr) . ')';
+					//}
+				?></option><?php
 			}
 			?></select><?php
 		}

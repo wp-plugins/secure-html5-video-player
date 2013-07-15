@@ -4,10 +4,12 @@ Plugin Name: Secure HTML5 Video Player
 Plugin URI: http://www.trillamar.com/webcraft/secure-html5-video-player/
 Description: An enhanced video plugin for WordPress built on the VideoJS HTML5 video player library.  Settings can be easily configured with a control panel and simplified short codes.  Video files can be served from a secured private directory. 
 Author: Lucinda Brown, Jinsoo Kang
-Version: 2.5
+Version: 3.0
 Author URI: http://www.trillamar.com/
 License: LGPLv3
 */
+
+$secure_html5_video_player_cache_ttl = 180;
 
 $secure_html5_video_player_is_android = preg_match("/android/i", $_SERVER['HTTP_USER_AGENT']);
 $secure_html5_video_player_is_chrome = preg_match("/chrome/i", $_SERVER['HTTP_USER_AGENT']);
@@ -63,11 +65,11 @@ endif;
 */
 if ( !function_exists('secure_html5_video_player_get_media_server_address') ):
 function secure_html5_video_player_get_media_server_address($client_ip, $video_filename) {
-	$has_media_server = ('yes' == get_option('secure_html5_video_player_enable_media_server'));
+	$has_media_server = secure_html5_video_player_has_media_server();
 	if ($has_media_server) {
+		$server_list = secure_html5_video_player_media_server_address_list();
 		$chksum = crc32($client_ip);
 		if ($chksum < 0) $chksum = -1 * $chksum;
-		$server_list = secure_html5_video_player_media_server_address_list();
 
 		if ($video_filename) {
 			$server_filelist = secure_html5_video_player_filelist(true);
