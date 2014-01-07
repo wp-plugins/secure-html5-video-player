@@ -17,7 +17,7 @@ function secure_html5_video_player_s3_link_expire_seconds() {
 	$secure_html5_video_player_s3_link_expire = get_option('secure_html5_video_player_s3_link_expire');
 	$secure_html5_video_player_s3_link_expire_units = get_option('secure_html5_video_player_s3_link_expire_units');
 	if (!$secure_html5_video_player_s3_link_expire) {
-$secure_html5_video_player_s3_link_expire = 28800;
+		$secure_html5_video_player_s3_link_expire = 28800;
 	}
 	else {
 		$secure_html5_video_player_s3_link_expire = floatval($secure_html5_video_player_s3_link_expire);
@@ -718,6 +718,11 @@ function secure_html5_video_player_options_help() {
 	print '<h3>loop</h3>';
 	_e('Replay the video from the beginning after it completes playing.', 'secure-html5-video-player');
 	print '<br/><br/><code>[video loop="yes"]</code>';
+
+	print '<h3>controls</h3>';
+	_e('Enable or disable video playback controls. (Only applies to the "native" skin.)', 'secure-html5-video-player');
+	print '<br/><br/><code>[video controls="no"]</code>';
+
 	
 	print '<br/><br/><hr/><br/><label class="title">';
 		_e('Examples', 'secure-html5-video-player');
@@ -740,7 +745,6 @@ function secure_html5_video_player_install() {
 	add_option('secure_html5_video_player_video_dir', ABSPATH . 'videos');
 	add_option('secure_html5_video_player_skin', 'tube');
 	add_option('secure_html5_video_player_key_seed', base64_encode(AUTH_KEY));
-	add_option('secure_html5_video_player_enable_flash_fallback', 'yes');
 	add_option('secure_html5_video_player_enable_download_fallback', 'yes');
 	
 	add_option('secure_html5_video_player_default_width', 640);
@@ -748,6 +752,7 @@ function secure_html5_video_player_install() {
 	add_option('secure_html5_video_player_default_preload', 'yes');
 	add_option('secure_html5_video_player_default_autoplay', 'no');
 	add_option('secure_html5_video_player_default_loop', 'no');
+	add_option('secure_html5_video_player_default_controls', 'yes');
 
 	add_option('secure_html5_video_player_enable_media_server', 'no');
 	add_option('secure_html5_video_player_media_servers', '');
@@ -784,6 +789,7 @@ function secure_html5_video_player_uninstall() {
 	delete_option('secure_html5_video_player_default_preload');
 	delete_option('secure_html5_video_player_default_autoplay');
 	delete_option('secure_html5_video_player_default_loop');
+	delete_option('secure_html5_video_player_default_controls');
 
 	delete_option('secure_html5_video_player_enable_media_server');
 	delete_option('secure_html5_video_player_media_servers');
@@ -817,14 +823,6 @@ function update_secure_html5_video_player_options() {
 		update_option('secure_html5_video_player_key_seed', $_REQUEST['secure_html5_video_player_key_seed']);
 	}
 	
-	if (isset($_REQUEST['secure_html5_video_player_enable_flash_fallback']) 
-	&& $_REQUEST['secure_html5_video_player_enable_flash_fallback'] == 'yes') {
-		update_option('secure_html5_video_player_enable_flash_fallback', 'yes');
-	}
-	else {
-		update_option('secure_html5_video_player_enable_flash_fallback', 'no');
-	}
-
 	if (isset($_REQUEST['secure_html5_video_player_enable_download_fallback']) 
 	&& $_REQUEST['secure_html5_video_player_enable_download_fallback'] != '') {
 		update_option('secure_html5_video_player_enable_download_fallback', $_REQUEST['secure_html5_video_player_enable_download_fallback']);
@@ -862,6 +860,14 @@ function update_secure_html5_video_player_options() {
 	}
 	else {
 		update_option('secure_html5_video_player_default_loop', 'no');
+	}
+
+	if (isset($_REQUEST['secure_html5_video_player_default_controls'])
+	&& $_REQUEST['secure_html5_video_player_default_controls'] == 'yes') {
+		update_option('secure_html5_video_player_default_controls', 'yes');
+	}
+	else {
+		update_option('secure_html5_video_player_default_controls', 'no');
 	}
 	
 	if (isset($_REQUEST['secure_html5_video_player_enable_media_server']) 
@@ -1008,15 +1014,6 @@ endif;
 
 if ( !function_exists('secure_html5_video_player_options_compatibility') ):
 function secure_html5_video_player_options_compatibility() {
-	$secure_html5_video_player_enable_flash_fallback = ('yes' == get_option('secure_html5_video_player_enable_flash_fallback') ? 'checked="checked"' : '');
-	?>
-	<input type='checkbox' value="yes" id="secure_html5_video_player_enable_flash_fallback" name='secure_html5_video_player_enable_flash_fallback' <?php print $secure_html5_video_player_enable_flash_fallback ?> />
-	<label class="title" for='secure_html5_video_player_enable_flash_fallback'><?php _e('Enable Flash fallback', 'secure-html5-video-player'); ?></label>
-	<br/>
-	<small><?php _e('If checked, Flowplayer will act as a fallback for non-html5 compliant browsers.', 'secure-html5-video-player'); ?></small>
-	<br/><br/><br/>
-
-	<?php
 	$secure_html5_video_player_enable_download_fallback = get_option('secure_html5_video_player_enable_download_fallback');
 	if ($secure_html5_video_player_enable_download_fallback == '') {
 		$secure_html5_video_player_enable_download_fallback = 'no';
@@ -1101,8 +1098,6 @@ endif;
 
 
 
-
-
 if ( !function_exists('secure_html5_video_player_options_form_media_server') ):
 function secure_html5_video_player_options_form_media_server() {
 	$secure_html5_video_player_enable_media_server = ('yes' == get_option('secure_html5_video_player_enable_media_server') ? 'checked="checked"' : '');
@@ -1136,6 +1131,7 @@ function secure_html5_video_player_options_form_playback() {
 	$secure_html5_video_player_default_preload = ('yes' == get_option('secure_html5_video_player_default_preload') ? 'checked="checked"' : '');
 	$secure_html5_video_player_default_autoplay = ('yes' == get_option('secure_html5_video_player_default_autoplay') ? 'checked="checked"' : '');
 	$secure_html5_video_player_default_loop = ('yes' == get_option('secure_html5_video_player_default_loop') ? 'checked="checked"' : '');
+	$secure_html5_video_player_default_controls = ('no' != get_option('secure_html5_video_player_default_controls') ? 'checked="checked"' : '');
 	?>
 	<label class="title" for='secure_html5_video_player_default_width'><?php _e('Default width', 'secure-html5-video-player'); ?></label><br/>
 	<input type='text' id="secure_html5_video_player_default_width" name='secure_html5_video_player_default_width'  size='10' value='<?php print $secure_html5_video_player_default_width ?>' /> px<br/>
@@ -1190,6 +1186,19 @@ function secure_html5_video_player_options_form_playback() {
 			'<b>yes</b>',
 			'<b>no</b>'
 		); ?></small>
+	<br/><br/>
+
+	<input type='checkbox' value="yes" id="secure_html5_video_player_default_controls" name='secure_html5_video_player_default_controls' <?php print $secure_html5_video_player_default_controls ?> />
+	<label class="title" for='secure_html5_video_player_default_controls'><?php _e('Video Player Controls', 'secure-html5-video-player'); ?></label>
+	<br/>
+	<small><?php 
+		printf(
+			__('If checked, the video player will show playback controls by default.  Can be overrided by setting the %1$s attribute in the short tag to %2$s or %3$s.', 'secure-html5-video-player'),
+			'<b>controls</b>',
+			'<b>yes</b>',
+			'<b>no</b>'
+		); ?></small>
+	<br/><br/>
 	<?php
 }
 endif;
@@ -1218,9 +1227,6 @@ function secure_html5_video_player_options_form_skin() {
 	<?php
 }
 endif;
-
-
-
 
 
 
@@ -1455,11 +1461,16 @@ endif;
 if ( !function_exists('secure_html5_video_player_add_header') ):
 function secure_html5_video_player_add_header() {
 	global $secure_html5_video_player_is_android;
+	global $secure_html5_video_player_is_ios;
 	global $secure_html5_video_player_is_explorer7;
 	global $secure_html5_video_player_is_explorer8;
-	global $secure_html5_video_player_is_ios;
-	if ($secure_html5_video_player_is_explorer7 || $secure_html5_video_player_is_explorer8 
-	|| $secure_html5_video_player_is_ios || $secure_html5_video_player_is_android) {
+	if ($secure_html5_video_player_is_ios || $secure_html5_video_player_is_android) {
+		return;
+	}
+	else if ($secure_html5_video_player_is_explorer7 || $secure_html5_video_player_is_explorer8) {
+		$plugin_dir = plugins_url('secure-html5-video-player');
+		print "<link rel='stylesheet' type='text/css' href='{$plugin_dir}/flowplayer/skin/minimalist.css'/>";
+		print "<script type='text/javascript' src='{$plugin_dir}/flowplayer/flowplayer.min.js'></script>";
 		return;
 	}
 	$secure_html5_video_player_skin = get_option('secure_html5_video_player_skin');
@@ -1505,6 +1516,7 @@ function secure_html5_video_player_shortcode_video($atts) {
     'preload' => get_option('secure_html5_video_player_default_preload'),
     'autoplay' => get_option('secure_html5_video_player_default_autoplay'),
     'loop' => get_option('secure_html5_video_player_default_loop'),
+    'controls' => get_option('secure_html5_video_player_default_controls'),
     'youtube' => '',
     'vimeo' => ''
   ), $atts));
@@ -1739,36 +1751,37 @@ function secure_html5_video_player_shortcode_video($atts) {
 		else {
 			$loop_attribute = "";
 		}
+	
+		if ($controls != 'no' && $controls != 'false') {
+			$controls_attribute = 'controls="controls"';
+		}
+		else {
+			$controls_attribute = "";
+		}
 		
 		$video_tag_skin = '';
 		if ($secure_html5_video_player_skin != 'videojs') {
 			$video_tag_skin = $secure_html5_video_player_skin . '-css';
 		}
-		$video_tag .= "<div class='video-js-box sh5vp-video-box {$video_tag_skin}'>\n";
+		$video_tag .= "<div class='video-js-box sh5vp-video-box {$video_tag_skin}' >\n";
 		
 		if ($secure_html5_video_player_is_ios || $secure_html5_video_player_is_android) {
 			// iOS and Android devices
-			$video_tag .= "<video class='video-js sh5vp-video' onClick='this.play();' width='{$width}' height='{$height}' {$poster_attribute} controls=\"controls\" {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
+			$video_tag .= "<video class='video-js sh5vp-video' onClick='this.play();' width='{$width}' height='{$height}' {$poster_attribute} {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
 			if ($mp4_source) {
 				$video_tag .= "{$mp4_source}\n";
 			}
 			$video_tag .= "</video>\n";
 		}
-		else if (
-			($secure_html5_video_player_is_firefox && $mp4 && !$ogg  && 'native' == $secure_html5_video_player_skin) 
-			|| 
-			(($secure_html5_video_player_is_explorer7 || $secure_html5_video_player_is_explorer8) && $mp4)
-		) {
+		else if (($secure_html5_video_player_is_explorer7 || $secure_html5_video_player_is_explorer8) && $mp4) {
 			// IE 7 or IE 8
-			$video_tag .= "<object id='{$object_tag_id}' class='vjs-flash-fallback' ";
-			$video_tag .= " width='{$width}' height='{$height}' type='application/x-shockwave-flash' data='{$plugin_dir}/flowplayer/flowplayer-3.2.7.swf'>\n";
-			$video_tag .= "<param name='movie' value='{$plugin_dir}/flowplayer/flowplayer-3.2.7.swf' />\n";
-			$video_tag .= "<param name='wmode' value='transparent' />\n"; 
-			$video_tag .= "<param name='allowfullscreen' value='true' />\n";
-			$video_tag .= "<param name='flashvars' value='config={\"playlist\":[ $flow_player_poster {\"url\": \"" . urlencode($mp4) . "\" $flow_player_autoplay $flow_player_preload }]}' />\n";
-			$video_tag .= "{$image_fallback}\n";
-			$video_tag .= "</object>\n";
-					
+			$video_tag .= "<div class='flowplayer' data-swf='{$plugin_dir}/flowplayer/flowplayer.swf' data-ratio='" . (1.0 * $height / $width) . "'>";
+			$video_tag .= "<video width='{$width}' height='{$height}'  {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
+			if ($mp4_source) {
+				$video_tag .= "{$mp4_source}\n";
+			}
+			$video_tag .= "</video>\n";
+			$video_tag .= "</div>";					
 			if ('always' == $secure_html5_video_player_enable_download_fallback) {
 				$video_tag .= "<p class='sh5vp-download-links'><label>Download Video:</label>\n";
 				if ($mp4_link) {
@@ -1785,53 +1798,26 @@ function secure_html5_video_player_shortcode_video($atts) {
 		}
 		else {
 			// everything else
-			$video_tag .= "<video class='video-js sh5vp-video' width='{$width}' height='{$height}' {$poster_attribute} controls=\"controls\" {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
-			if ($mp4_source) {
-				$video_tag .= "{$mp4_source}\n";
-			}
+			$video_tag .= "<video class='video-js sh5vp-video' width='{$width}' height='{$height}' {$poster_attribute} {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
 			if ($webm_source) {
 				$video_tag .= "{$webm_source}\n";
 			}
 			if ($ogg_source) {
 				$video_tag .= "{$ogg_source}\n";
 			}
+			if ($mp4_source) {
+				$video_tag .= "{$mp4_source}\n";
+			}
 			if ($count_file_exists == 0) {
 				$video_tag .= "<!-- " . __('file not found', 'secure-html5-video-player') . ": {$secure_html5_video_player_video_dir}/{$file} -->\n";
 			}
-		
-			if ('yes' == get_option('secure_html5_video_player_enable_flash_fallback') && $mp4) {
-				//Flash Fallback. Use any flash video player here. Make sure to keep the vjs-flash-fallback class.
-				$video_tag .= "<object id='{$object_tag_id}' class='vjs-flash-fallback' ";
-				$video_tag .= " width='{$width}' height='{$height}' type='application/x-shockwave-flash' data='{$plugin_dir}/flowplayer/flowplayer-3.2.7.swf'>\n";
-				$video_tag .= "<param name='movie' value='{$plugin_dir}/flowplayer/flowplayer-3.2.7.swf' />\n";
-				$video_tag .= "<param name='wmode' value='transparent' />\n"; 
-				$video_tag .= "<param name='allowfullscreen' value='true' />\n";
-				$video_tag .= "<param name='flashvars' value='config={\"playlist\":[ $flow_player_poster {\"url\": \"" . urlencode($mp4) . "\" $flow_player_autoplay $flow_player_preload }]}' />\n";
-				$video_tag .= "{$image_fallback}\n";
-				$video_tag .= "</object>\n";
-			}
 			$video_tag .= "</video>\n";
-			
+					
 			//Download links provided for devices that can't play video in the browser.
 			if ('no' != $secure_html5_video_player_enable_download_fallback) {
 				$can_play_provided = secure_html5_video_player_can_play($mp4_link, $ogg_link, $webm_link);
-				if ('native' == $secure_html5_video_player_skin) {
-					if (! $can_play_provided || 'always' == $secure_html5_video_player_enable_download_fallback) {
-						$video_tag .= "<p class='sh5vp-download-links'><label>Download Video:</label>\n";
-						if ($mp4_link) {
-							$video_tag .= "{$mp4_link}\n";
-						}
-						if ($webm_link) {
-							$video_tag .= "{$webm_link}\n";
-						}
-						if ($ogg_link) {
-							$video_tag .= "{$ogg_link}\n";
-						}
-						$video_tag .= "</p>\n";
-					}
-				}
-				else {
-					$video_tag .= "<p class='vjs-no-video'><label>Download Video:</label>\n";
+				if (! $can_play_provided || 'always' == $secure_html5_video_player_enable_download_fallback) {
+					$video_tag .= "<p class='sh5vp-download-links'><label>Download Video:</label>\n";
 					if ($mp4_link) {
 						$video_tag .= "{$mp4_link}\n";
 					}
@@ -1864,7 +1850,6 @@ function secure_html5_video_player_shortcode_video($atts) {
 			return $youtube_tag;
 		}	
 	}
-	
 	return $video_tag;
 }
 endif;
@@ -2064,12 +2049,10 @@ endif;
 
 
 
-
 if ( !function_exists('secure_html5_video_player_can_play') ):
 function secure_html5_video_player_can_play($has_mp4, $has_ogg, $has_webm) {
 	global $secure_html5_video_player_is_chrome;
 	global $secure_html5_video_player_is_firefox;
-	
 	$can_play_mp4 = TRUE;
 	$can_play_ogg = FALSE;
 	$can_play_webm = FALSE;
@@ -2080,6 +2063,7 @@ function secure_html5_video_player_can_play($has_mp4, $has_ogg, $has_webm) {
 	if ($secure_html5_video_player_is_firefox) {
 		$can_play_mp4 = FALSE;
 		$can_play_ogg = TRUE;
+		$can_play_webm = TRUE;
 	}
 	return ($has_mp4 && $can_play_mp4) || ($has_ogg && $can_play_ogg) || ($has_webm && $can_play_webm);
 }

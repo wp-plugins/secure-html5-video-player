@@ -2,8 +2,8 @@
 Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, flowplayer, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
-Tested up to: 3.6.1
-Stable tag: 3.1
+Tested up to: 3.8
+Stable tag: 3.2
 
 Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory or via S3.
 
@@ -88,6 +88,16 @@ Start playing the video as soon as it's ready.
 
     [video autoplay="yes"]
 
+### loop
+Replay the video from the beginning after it completes playing.
+
+		[video loop="yes"]
+
+### controls
+Enable or disable video playback controls. (Only applies to the "native" skin.)
+
+    [video controls="no"]
+
 
 Video Shortcode Examples
 ------------------------
@@ -115,6 +125,12 @@ Video Shortcode Examples
 8. S3 settings
 
 == Changelog ==
+
+= 3.2 =
+* Upgraded Flowplayer files to the latest version to resolve a security hole.
+* Removed option for Flash fall back.  Flash fall back now happens automatically, and only for IE 7 and 8.
+* Added option to turn on controls in HTML5 video player for the native skin setting.
+* Added Spanish language localization, courtesy of webhostinghub.com.
 
 = 3.1 =
 * Added ability to set the duration time for S3 media lifespan.
@@ -172,6 +188,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.2 =
+Upgraded Flowplayer files to the latest version to resolve a security hole. Removed option for Flash fall back.  Flash fall back now happens automatically, and only for IE 7 and 8. Added option to turn on controls in HTML5 video player for the native skin setting. Added Spanish language localization, courtesy of webhostinghub.com.
 
 = 3.1 =
 Added ability to set the duration time for S3 media lifespan. Expanded the S3 server list for current Amazon S3 global regions. Note: The S3 server must be specified to the one that matches the region of the bucket. Added additional help text in the S3 settings tab.
