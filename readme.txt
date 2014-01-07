@@ -3,7 +3,9 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, flowplayer, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 3.2
+Stable tag: 3.3
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory or via S3.
 
@@ -126,6 +128,10 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.3 =
+* Added GPLv3 licensing info.
+* Moved screenshots to the central plugin assets folder.
+
 = 3.2 =
 * Upgraded Flowplayer files to the latest version to resolve a security hole.
 * Removed option for Flash fall back.  Flash fall back now happens automatically, and only for IE 7 and 8.
@@ -188,6 +194,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.3 =
+Added GPLv3 licensing info. Moved screenshots to the central plugin assets folder.
 
 = 3.2 =
 Upgraded Flowplayer files to the latest version to resolve a security hole. Removed option for Flash fall back.  Flash fall back now happens automatically, and only for IE 7 and 8. Added option to turn on controls in HTML5 video player for the native skin setting. Added Spanish language localization, courtesy of webhostinghub.com.
