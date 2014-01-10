@@ -1,9 +1,9 @@
 === Secure HTML5 Video Player ===
 Contributors: Lucinda Brown, Jinsoo Kang
-Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, flowplayer, skins, media server, youtube, vimeo, amazon, s3
+Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 3.3
+Stable tag: 3.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -15,7 +15,6 @@ A video plugin for WordPress built on the VideoJS HTML5 video player library. Al
 
 See <a href="http://www.trillamar.com/webcraft/secure-html5-video-player/">www.trillamar.com/secure-html5-video-player/</a> for additional information about Secure HTML5 Video Player.
 See <a href="http://videojs.com/">VideoJS.com</a> for additional information about VideoJS.
-See <a href="http://flowplayer.org/">Flowplayer.org</a> for additional information about Flowplayer.
 
 == Installation ==
 
@@ -128,6 +127,10 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.4 =
+* Removed dependency on Flowplayer for Flash fallback.
+* Added back fallback support for Firefox playback of MP4 videos using Flash.
+
 = 3.3 =
 * Added GPLv3 licensing info.
 * Moved screenshots to the central plugin assets folder.
@@ -194,6 +197,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.4 =
+Removed dependency on Flowplayer for Flash fallback. Added back fallback support for Firefox playback of MP4 videos using Flash.
 
 = 3.3 =
 Added GPLv3 licensing info. Moved screenshots to the central plugin assets folder.

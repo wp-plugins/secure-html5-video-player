@@ -639,11 +639,6 @@ function secure_html5_video_player_options() {
 		__('See %s for additional information about VideoJS.', 'secure-html5-video-player'), 
 		'<a href="http://videojs.com/" target="_blank">videojs.com</a>'
 	);
-	print '<br/>';
-	printf(
-		__('See %s for additional information about Flowplayer.', 'secure-html5-video-player'), 
-		'<a href="http://flowplayer.org/" target="_blank">flowplayer.org</a>'
-	);
 	print '<br/></p><br/>';
 	print '<input type="submit" name="submit" class="button-primary" value="';
 		_e('Save the options', 'secure-html5-video-player'); 
@@ -1467,12 +1462,6 @@ function secure_html5_video_player_add_header() {
 	if ($secure_html5_video_player_is_ios || $secure_html5_video_player_is_android) {
 		return;
 	}
-	else if ($secure_html5_video_player_is_explorer7 || $secure_html5_video_player_is_explorer8) {
-		$plugin_dir = plugins_url('secure-html5-video-player');
-		print "<link rel='stylesheet' type='text/css' href='{$plugin_dir}/flowplayer/skin/minimalist.css'/>";
-		print "<script type='text/javascript' src='{$plugin_dir}/flowplayer/flowplayer.min.js'></script>";
-		return;
-	}
 	$secure_html5_video_player_skin = get_option('secure_html5_video_player_skin');
 	$plugin_dir = plugins_url('secure-html5-video-player');
 	if ($secure_html5_video_player_skin != 'native') {
@@ -1696,6 +1685,8 @@ function secure_html5_video_player_shortcode_video($atts) {
 				}
 			}
 		}	
+
+		$fallback_plugin_dir = urlencode($plugin_dir);
 		
 		// MP4 Source Supplied
 		if ($mp4) {
@@ -1704,6 +1695,7 @@ function secure_html5_video_player_shortcode_video($atts) {
 			}
 			$mp4_source = '<source src="'.$mp4.'" type="video/mp4" />';
 			$mp4_link = '<a class="sh5vp-link-mp4" href="'.$mp4.'">MP4</a>';
+			$fallback_mp4 = urlencode($mp4);
 			$count_file_exists++;
 		}
 	
@@ -1723,26 +1715,23 @@ function secure_html5_video_player_shortcode_video($atts) {
 	
 		if ($poster) {
 			$poster_attribute = 'poster="'.$poster.'"';
-			$flow_player_poster = '"'. urlencode($poster) .'", ';
 			$image_fallback = "<img src='$poster' width='$width' height='$height' alt='Poster Image' title='No video playback capabilities.' />";
 		}
 	
 		if ($preload == 'yes' || $preload == 'true') {
 			$preload_attribute = 'preload="auto"';
-			$flow_player_preload = ',"autoBuffering":true';
 		}
 		else {
 			$preload_attribute = 'preload="none"';
-			$flow_player_preload = ',"autoBuffering":false';
 		}
 	
 		if ($autoplay == 'yes' || $autoplay == 'true') {
 			$autoplay_attribute = 'autoplay="autoplay"';
-			$flow_player_autoplay = ',"autoPlay":true';
+			$fallback_autoplay = '1';
 		}
 		else {
 			$autoplay_attribute = "";
-			$flow_player_autoplay = ',"autoPlay":false';
+			$fallback_autoplay = '0';
 		}
 	
 		if ($loop == 'yes' || $loop == 'true') {
@@ -1775,13 +1764,7 @@ function secure_html5_video_player_shortcode_video($atts) {
 		}
 		else if (($secure_html5_video_player_is_explorer7 || $secure_html5_video_player_is_explorer8) && $mp4) {
 			// IE 7 or IE 8
-			$video_tag .= "<div class='flowplayer' data-swf='{$plugin_dir}/flowplayer/flowplayer.swf' data-ratio='" . (1.0 * $height / $width) . "'>";
-			$video_tag .= "<video width='{$width}' height='{$height}'  {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
-			if ($mp4_source) {
-				$video_tag .= "{$mp4_source}\n";
-			}
-			$video_tag .= "</video>\n";
-			$video_tag .= "</div>";					
+			$video_tag .= "<iframe id='{$object_tag_id}' type='text/html' width='{$width}' height='{$height}' src='{$plugin_dir}/fallback/index.php?autoplay={$fallback_autoplay}&mp4={$fallback_mp4}&url={$fallback_plugin_dir}' frameborder='0' scrolling='no' seamless='seamless' /></iframe>\n";
 			if ('always' == $secure_html5_video_player_enable_download_fallback) {
 				$video_tag .= "<p class='sh5vp-download-links'><label>Download Video:</label>\n";
 				if ($mp4_link) {
@@ -1798,21 +1781,25 @@ function secure_html5_video_player_shortcode_video($atts) {
 		}
 		else {
 			// everything else
-			$video_tag .= "<video class='video-js sh5vp-video' width='{$width}' height='{$height}' {$poster_attribute} {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
-			if ($webm_source) {
-				$video_tag .= "{$webm_source}\n";
-			}
-			if ($ogg_source) {
-				$video_tag .= "{$ogg_source}\n";
-			}
-			if ($mp4_source) {
-				$video_tag .= "{$mp4_source}\n";
-			}
 			if ($count_file_exists == 0) {
 				$video_tag .= "<!-- " . __('file not found', 'secure-html5-video-player') . ": {$secure_html5_video_player_video_dir}/{$file} -->\n";
 			}
-			$video_tag .= "</video>\n";
-					
+			else if ($secure_html5_video_player_is_firefox && $mp4 && !($ogv || $webm)) {
+				$video_tag .= "<iframe id='{$object_tag_id}' type='text/html' width='{$width}' height='{$height}' src='{$plugin_dir}/fallback/index.php?autoplay={$fallback_autoplay}&mp4={$fallback_mp4}&url={$fallback_plugin_dir}' frameborder='0' /></iframe>\n";
+			}
+			else {
+				$video_tag .= "<video class='video-js sh5vp-video' width='{$width}' height='{$height}' {$poster_attribute} {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
+				if ($webm_source) {
+					$video_tag .= "{$webm_source}\n";
+				}
+				if ($ogg_source) {
+					$video_tag .= "{$ogg_source}\n";
+				}
+				if ($mp4_source) {
+					$video_tag .= "{$mp4_source}\n";
+				}
+				$video_tag .= "</video>\n";
+			}				
 			//Download links provided for devices that can't play video in the browser.
 			if ('no' != $secure_html5_video_player_enable_download_fallback) {
 				$can_play_provided = secure_html5_video_player_can_play($mp4_link, $ogg_link, $webm_link);
