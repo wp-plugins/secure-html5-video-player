@@ -612,7 +612,7 @@ endif;
 
 if ( !function_exists('secure_html5_video_player_options') ):
 function secure_html5_video_player_options() {
-	print '<div class="wrap"><form method="post" class="sh5vp_form"><h2>';
+	print '<div class="wrap"><h2>';
 	_e('Secure HTML5 Video Player', 'secure-html5-video-player');
 	print '</h2>';
 	if (!empty($_POST)) {
@@ -640,7 +640,27 @@ function secure_html5_video_player_options() {
 		'<a href="http://videojs.com/" target="_blank">videojs.com</a>'
 	);
 	print '<br/></p><br/>';
-	print '<input type="submit" name="submit" class="button-primary" value="';
+
+	print '<div class="sh5vp_donate_box"><h3>';
+	_e('Donate', 'secure-html5-video-player');
+	print '</h3>';
+	print '<p>';
+	_e('If you like this plugin and find it useful, help keep this plugin free and actively developed by making a donation.', 'secure-html5-video-player');
+	print '</p>';
+	print '<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">';
+	print '<input type="hidden" name="cmd" value="_donations">';
+	print '<input type="hidden" name="business" value="webcraft@trillamar.com">';
+	print '<input type="hidden" name="lc" value="US">';
+	print '<input type="hidden" name="item_name" value="Trillamar Webcraft - donation to support Secure HTML5 Video Plugin">';
+	print '<input type="hidden" name="no_note" value="0">';
+	print '<input type="hidden" name="currency_code" value="USD">';
+	print '<input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest">';
+	print '<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">';
+	print '<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">';
+	print '</form></div>';
+
+	print '<br/></p><br/>';
+	print '<form method="post" class="sh5vp_form"><input type="submit" name="submit" class="button-primary" value="';
 		_e('Save the options', 'secure-html5-video-player'); 
 	print '" />';
 	secure_html5_video_player_options_form();
@@ -1455,11 +1475,8 @@ endif;
 
 if ( !function_exists('secure_html5_video_player_add_header') ):
 function secure_html5_video_player_add_header() {
-	global $secure_html5_video_player_is_android;
-	global $secure_html5_video_player_is_ios;
-	global $secure_html5_video_player_is_explorer7;
-	global $secure_html5_video_player_is_explorer8;
-	if ($secure_html5_video_player_is_ios || $secure_html5_video_player_is_android) {
+	$bd = SH5VP_BrowserDetect::detect();
+	if ($bd->isMobileBrowser()) {
 		return;
 	}
 	$secure_html5_video_player_skin = get_option('secure_html5_video_player_skin');
@@ -1479,12 +1496,7 @@ endif;
 
 if ( !function_exists('secure_html5_video_player_shortcode_video') ):
 function secure_html5_video_player_shortcode_video($atts) {
-	global $secure_html5_video_player_is_android;
-	global $secure_html5_video_player_is_firefox;
-	global $secure_html5_video_player_is_explorer7;
-	global $secure_html5_video_player_is_explorer8;
-	global $secure_html5_video_player_is_ios;
-	
+	$bd = SH5VP_BrowserDetect::detect();
 	$video_tag = '';
 	$count_file_exists = 0;
 
@@ -1754,15 +1766,15 @@ function secure_html5_video_player_shortcode_video($atts) {
 		}
 		$video_tag .= "<div class='video-js-box sh5vp-video-box {$video_tag_skin}' >\n";
 		
-		if ($secure_html5_video_player_is_ios || $secure_html5_video_player_is_android) {
+		if ($bd->isMobileBrowser()) {
 			// iOS and Android devices
-			$video_tag .= "<video class='video-js sh5vp-video' onClick='this.play();' width='{$width}' height='{$height}' {$poster_attribute} {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
+			$video_tag .= "<video class='video-js sh5vp-video' onclick='this.play();' width='{$width}' height='{$height}' {$poster_attribute} {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
 			if ($mp4_source) {
 				$video_tag .= "{$mp4_source}\n";
 			}
 			$video_tag .= "</video>\n";
 		}
-		else if (($secure_html5_video_player_is_explorer7 || $secure_html5_video_player_is_explorer8) && $mp4) {
+		else if ($bd->isIE() && $bd->versionIE() <= 8 && $mp4) {
 			// IE 7 or IE 8
 			$video_tag .= "<iframe id='{$object_tag_id}' type='text/html' width='{$width}' height='{$height}' src='{$plugin_dir}/fallback/index.php?autoplay={$fallback_autoplay}&mp4={$fallback_mp4}&url={$fallback_plugin_dir}' frameborder='0' scrolling='no' seamless='seamless' /></iframe>\n";
 			if ('always' == $secure_html5_video_player_enable_download_fallback) {
@@ -1784,7 +1796,7 @@ function secure_html5_video_player_shortcode_video($atts) {
 			if ($count_file_exists == 0) {
 				$video_tag .= "<!-- " . __('file not found', 'secure-html5-video-player') . ": {$secure_html5_video_player_video_dir}/{$file} -->\n";
 			}
-			else if ($secure_html5_video_player_is_firefox && $mp4 && !($ogv || $webm)) {
+			else if ($bd->isFirefox() && $mp4 && !($ogg || $webm)) {
 				$video_tag .= "<iframe id='{$object_tag_id}' type='text/html' width='{$width}' height='{$height}' src='{$plugin_dir}/fallback/index.php?autoplay={$fallback_autoplay}&mp4={$fallback_mp4}&url={$fallback_plugin_dir}' frameborder='0' /></iframe>\n";
 			}
 			else {
@@ -2038,16 +2050,15 @@ endif;
 
 if ( !function_exists('secure_html5_video_player_can_play') ):
 function secure_html5_video_player_can_play($has_mp4, $has_ogg, $has_webm) {
-	global $secure_html5_video_player_is_chrome;
-	global $secure_html5_video_player_is_firefox;
+	$bd = SH5VP_BrowserDetect::detect();
 	$can_play_mp4 = TRUE;
 	$can_play_ogg = FALSE;
 	$can_play_webm = FALSE;
-	if ($secure_html5_video_player_is_chrome) {
+	if ($bd->isChrome()) {
 		$can_play_ogg = TRUE;
 		$can_play_webm = TRUE;
 	}
-	if ($secure_html5_video_player_is_firefox) {
+	elseif ($bd->isFirefox()) {
 		$can_play_mp4 = FALSE;
 		$can_play_ogg = TRUE;
 		$can_play_webm = TRUE;

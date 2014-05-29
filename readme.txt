@@ -2,8 +2,8 @@
 Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
-Tested up to: 3.8
-Stable tag: 3.4
+Tested up to: 3.9.1
+Stable tag: 3.5
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,6 +127,11 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.5 =
+* Fixed a bug where OGV videos were not detected on Firefox browsers if there was no corresponding WEBM video.
+* Added donation button.
+* Optimized browser detection.
+
 = 3.4 =
 * Removed dependency on Flowplayer for Flash fallback.
 * Added back fallback support for Firefox playback of MP4 videos using Flash.
@@ -197,6 +202,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.5 =
+Fixed a bug where OGV videos were not detected on Firefox browsers if there was no corresponding WEBM video. Added donation button. Optimized browser detection.
 
 = 3.4 =
 Removed dependency on Flowplayer for Flash fallback. Added back fallback support for Firefox playback of MP4 videos using Flash.

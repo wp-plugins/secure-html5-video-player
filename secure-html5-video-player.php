@@ -4,7 +4,7 @@ Plugin Name: Secure HTML5 Video Player
 Plugin URI: http://www.trillamar.com/webcraft/secure-html5-video-player/
 Description: Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory or via S3. 
 Author: Lucinda Brown, Jinsoo Kang
-Version: 3.4
+Version: 3.5
 Author URI: http://www.trillamar.com/
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -30,13 +30,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 $secure_html5_video_player_cache_ttl = 180;
 
-$secure_html5_video_player_is_android = preg_match("/android/i", $_SERVER['HTTP_USER_AGENT']);
-$secure_html5_video_player_is_chrome = preg_match("/chrome/i", $_SERVER['HTTP_USER_AGENT']);
-$secure_html5_video_player_is_firefox = preg_match("/firefox/i", $_SERVER['HTTP_USER_AGENT']);
-$secure_html5_video_player_is_explorer7 = preg_match("/msie 7/i", $_SERVER['HTTP_USER_AGENT']);
-$secure_html5_video_player_is_explorer8 = preg_match("/msie 8/i", $_SERVER['HTTP_USER_AGENT']);
-$secure_html5_video_player_is_ios = preg_match("/mobile/i", $_SERVER['HTTP_USER_AGENT']) && preg_match("/safari/i", $_SERVER['HTTP_USER_AGENT']);
-
+require_once('sh5vp-browser-detect.php');
 require_once('sh5vp-functions.php');
 require_once('sh5vp-widgets.php');
 require_once('sh5vp-metabox.php');

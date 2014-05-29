@@ -25,7 +25,7 @@
 * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 * POSSIBILITY OF SUCH DAMAGE.
 *
-* Amazon SH5VP_S3 is a trademark of Amazon.com, Inc. or its affiliates.
+* Amazon S3 is a trademark of Amazon.com, Inc. or its affiliates.
 */
 
 /**
