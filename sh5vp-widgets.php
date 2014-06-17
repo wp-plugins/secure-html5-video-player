@@ -1,12 +1,31 @@
-<?php 
+<?php
+
+/*
+	Copyright (c) 2011-2014 Lucinda Brown <info@trillamar.com>
+	Copyright (c) 2011-2014 Jinsoo Kang <info@trillamar.com>
+
+	Secure HTML5 Video Player is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 
 if( !class_exists( 'secure_html5_video_player_widget' ) ) :
 class secure_html5_video_player_widget extends WP_Widget {
-	
-	
+
+
 	function secure_html5_video_player_widget() {
 		$widget_ops = array(
-			'classname' => 'secure_html5_video_player_widget', 
+			'classname' => 'secure_html5_video_player_widget',
 			'description' => __('A widget that plays HTML5 video.', 'secure-html5-video-player')
 		);
 		$control_ops = array(
@@ -15,7 +34,7 @@ class secure_html5_video_player_widget extends WP_Widget {
 		$this->WP_Widget(false, __('Secure HTML5 Video Player', 'secure-html5-video-player'), $widget_ops, $control_ops);
 	}
 
-	
+
 	function widget( $args, $instance ) {
 		extract( $args );
 		$custom_width = get_option('secure_html5_video_player_default_width');
@@ -34,16 +53,17 @@ class secure_html5_video_player_widget extends WP_Widget {
 		}
 		if ($instance['autoplay']) {
 			$custom_autoplay = $instance['autoplay'];
-		}	
+		}
 		if ($instance['loop']) {
 			$custom_loop = $instance['loop'];
-		}	
+		}
 		print $before_widget;
 		print $before_title;
 		print $instance['title'];
 		print $after_title;
+		$secure_html5_video_player_video_shortcode = get_option('secure_html5_video_player_video_shortcode', 'video');
 		print do_shortcode(
-			'[video file="'.$instance['video'].'" '
+			'['.$secure_html5_video_player_video_shortcode.' file="'.$instance['video'].'" '
 			.' youtube="'.$instance['youtube_video_id'].'" vimeo="'.$instance['vimeo_video_id'].'" '
 			.' preload="'.$custom_preload.'" autoplay="'.$custom_autoplay.'" loop="'.$custom_loop.'" '
 			.' width="'.$custom_width.'" height="'.$custom_height.'"]'
@@ -54,7 +74,7 @@ class secure_html5_video_player_widget extends WP_Widget {
 		print $after_widget;
 	}
 
-	
+
 	function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 		$instance['title'] = strip_tags( $new_instance['title'] );
@@ -69,8 +89,8 @@ class secure_html5_video_player_widget extends WP_Widget {
 		$instance['caption'] = $new_instance['caption'];
 		return $instance;
 	}
-	
-	
+
+
 	function form( $instance ) {
 		$defaults = array(
 			'title' => '',
@@ -84,11 +104,11 @@ class secure_html5_video_player_widget extends WP_Widget {
 			'loop' => get_option('secure_html5_video_player_default_loop'),
 			'caption' => ''
 		);
-		$instance = wp_parse_args( ( array )$instance, $defaults ); 
+		$instance = wp_parse_args( ( array )$instance, $defaults );
 ?><table>
 
 <tr>
-	<td colspan="2"><label for="<?php print $this->get_field_id( 'title' ); ?>"><?php 
+	<td colspan="2"><label for="<?php print $this->get_field_id( 'title' ); ?>"><?php
 		_e('Title', 'secure-html5-video-player');
 	?>:</label></td>
 </tr>
@@ -97,7 +117,7 @@ class secure_html5_video_player_widget extends WP_Widget {
 </tr>
 
 <tr>
-	<td colspan="2"><label for="<?php print $this->get_field_id( 'video' ); ?>"><?php 
+	<td colspan="2"><label for="<?php print $this->get_field_id( 'video' ); ?>"><?php
 		_e('Video', 'secure-html5-video-player');
 	?>:</label></td></tr>
 <tr>
@@ -108,10 +128,10 @@ class secure_html5_video_player_widget extends WP_Widget {
 			<option value=""></option>
 <?php
 			foreach ($video_files as $curr_video_file => $server_addr) {
-				?><option value="<?php print $curr_video_file; ?>" <?php 
+				?><option value="<?php print $curr_video_file; ?>" <?php
 					if ($instance['video'] == $curr_video_file) {
 						?> selected="selected" <?php
-					} ?> ><?php 
+					} ?> ><?php
 						print $curr_video_file;
 						//if (count($server_addr) > 0) {
 						//	print ' (' . implode(', ', $server_addr) . ')';
@@ -128,7 +148,7 @@ class secure_html5_video_player_widget extends WP_Widget {
 
 
 <tr>
-	<td colspan="2"><label for="<?php print $this->get_field_id( 'youtube_video_id' ); ?>"><?php 
+	<td colspan="2"><label for="<?php print $this->get_field_id( 'youtube_video_id' ); ?>"><?php
 		_e('Youtube video ID', 'secure-html5-video-player');
 	?>:</label></td>
 </tr>
@@ -138,7 +158,7 @@ class secure_html5_video_player_widget extends WP_Widget {
 
 
 <tr>
-	<td colspan="2"><label for="<?php print $this->get_field_id( 'vimeo_video_id' ); ?>"><?php 
+	<td colspan="2"><label for="<?php print $this->get_field_id( 'vimeo_video_id' ); ?>"><?php
 		_e('Vimeo video ID', 'secure-html5-video-player');
 	?>:</label></td>
 </tr>
@@ -149,57 +169,57 @@ class secure_html5_video_player_widget extends WP_Widget {
 
 
 <tr>
-	<td><label for="<?php print $this->get_field_id( 'width' ); ?>"><?php 
+	<td><label for="<?php print $this->get_field_id( 'width' ); ?>"><?php
 		_e('Width', 'secure-html5-video-player')
 	?>:</label></td>
 	<td style="width:100%;"><input type="text" id="<?php print $this->get_field_id( 'width' ); ?>" name="<?php print $this->get_field_name( 'width' ); ?>" value="<?php print $instance['width']; ?>" size="5" /> px</td>
-</tr>	
+</tr>
 <tr>
-	<td><label for="<?php print $this->get_field_id( 'height' ); ?>"><?php 
+	<td><label for="<?php print $this->get_field_id( 'height' ); ?>"><?php
 		_e('Height', 'secure-html5-video-player')
 	?>:</label></td>
 	<td><input type="text" id="<?php print $this->get_field_id( 'height' ); ?>" name="<?php print $this->get_field_name( 'height' ); ?>" value="<?php print $instance['height']; ?>" size="5"  /> px</td>
-</tr>	
+</tr>
 <tr>
 	<td colspan="2">
-		<input type="checkbox" id="<?php print $this->get_field_id( 'preload' ); ?>" name="<?php print $this->get_field_name( 'preload' ); ?>" value="yes" <?php 
+		<input type="checkbox" id="<?php print $this->get_field_id( 'preload' ); ?>" name="<?php print $this->get_field_name( 'preload' ); ?>" value="yes" <?php
 	if ($instance['preload'] == 'yes') {
 		?> checked="checked" <?php
-	} 
+	}
 	?> />
-		<label for="<?php print $this->get_field_id( 'preload' ); ?>"><?php 
+		<label for="<?php print $this->get_field_id( 'preload' ); ?>"><?php
 		_e('Preload', 'secure-html5-video-player')
 		?></label>
 	</td>
-</tr>	
+</tr>
 <tr>
 	<td colspan="2">
-		<input type="checkbox" id="<?php print $this->get_field_id( 'autoplay' ); ?>" name="<?php print $this->get_field_name( 'autoplay' ); ?>" value="yes" <?php 
+		<input type="checkbox" id="<?php print $this->get_field_id( 'autoplay' ); ?>" name="<?php print $this->get_field_name( 'autoplay' ); ?>" value="yes" <?php
 	if ($instance['autoplay'] == 'yes') {
 		?> checked="checked" <?php
-	} 
+	}
 	?> />
-		<label for="<?php print $this->get_field_id( 'autoplay' ); ?>"><?php 
+		<label for="<?php print $this->get_field_id( 'autoplay' ); ?>"><?php
 		_e('Autoplay', 'secure-html5-video-player')
 		?></label>
 	</td>
-</tr>	
+</tr>
 <tr>
 	<td colspan="2">
-		<input type="checkbox" id="<?php print $this->get_field_id( 'loop' ); ?>" name="<?php print $this->get_field_name( 'loop' ); ?>" value="yes" <?php 
+		<input type="checkbox" id="<?php print $this->get_field_id( 'loop' ); ?>" name="<?php print $this->get_field_name( 'loop' ); ?>" value="yes" <?php
 	if ($instance['loop'] == 'yes') {
 		?> checked="checked" <?php
-	} 
+	}
 	?> />
-		<label for="<?php print $this->get_field_id( 'loop' ); ?>"><?php 
+		<label for="<?php print $this->get_field_id( 'loop' ); ?>"><?php
 		_e('Loop', 'secure-html5-video-player')
 		?></label>
 	</td>
-</tr>	
-<tr><td colspan="2"><label for="<?php print $this->get_field_id( 'caption' ); ?>"><?php 
+</tr>
+<tr><td colspan="2"><label for="<?php print $this->get_field_id( 'caption' ); ?>"><?php
 		_e('Caption (Text or HTML)', 'secure-html5-video-player')
 	?>:</label></td></tr>
-<tr><td colspan="2"><textarea id="<?php print $this->get_field_id( 'caption' ); ?>" name="<?php print $this->get_field_name( 'caption' ); ?>" rows="5" cols="29" class="widefat" ><?php print $instance['caption']; ?></textarea></td></tr>	
+<tr><td colspan="2"><textarea id="<?php print $this->get_field_id( 'caption' ); ?>" name="<?php print $this->get_field_name( 'caption' ); ?>" rows="5" cols="29" class="widefat" ><?php print $instance['caption']; ?></textarea></td></tr>
 </table>
 
 

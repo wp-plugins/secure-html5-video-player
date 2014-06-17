@@ -1,5 +1,22 @@
 <?php
 
+/*
+	Copyright (c) 2011-2014 Lucinda Brown <info@trillamar.com>
+	Copyright (c) 2011-2014 Jinsoo Kang <info@trillamar.com>
+
+	Secure HTML5 Video Player is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 
 add_action('add_meta_boxes', 'secure_html5_video_player_add_custom_box');
@@ -9,13 +26,13 @@ add_action('save_post', 'secure_html5_video_player_save_postdata');
 
 if ( !function_exists('secure_html5_video_player_add_custom_box') ):
 function secure_html5_video_player_add_custom_box() {
-	$post_types = get_post_types('','names'); 
+	$post_types = get_post_types('','names');
 	foreach ($post_types as $post_type ) {
 		add_meta_box(
 			'secure_html5_video_player_metabox',
 			__('Secure HTML5 Video Player', 'secure-html5-video-player'),
 			'secure_html5_video_player_inner_custom_box',
-			$post_type 
+			$post_type
 		);
 	}
 }
@@ -54,7 +71,7 @@ function secure_html5_video_player_inner_custom_box($post) {
 ?><table>
 
 <tr>
-	<td><label for="sh5vp-video"><?php 
+	<td><label for="sh5vp-video"><?php
 		_e('Video', 'secure-html5-video-player');
 	?>:</label></td>
 	<td>
@@ -65,11 +82,11 @@ function secure_html5_video_player_inner_custom_box($post) {
 			<option value=""></option>
 <?php
 			foreach ($video_files as $curr_video_file => $server_addr) {
-				?><option value="<?php print $curr_video_file; ?>" <?php 
+				?><option value="<?php print $curr_video_file; ?>" <?php
 					if ($instance['video'] == $curr_video_file) {
 						?> selected="selected" <?php
-					} 
-				?> ><?php 
+					}
+				?> ><?php
 					print $curr_video_file;
 					//if (count($server_addr) > 0) {
 					//	print ' (' . implode(', ', $server_addr) . ')';
@@ -85,72 +102,72 @@ function secure_html5_video_player_inner_custom_box($post) {
 </tr>
 
 <tr>
-	<td><label for="sh5vp-youtube_video_id"><?php 
+	<td><label for="sh5vp-youtube_video_id"><?php
 		_e('Youtube video ID', 'secure-html5-video-player');
 	?>:</label></td>
 	<td><input type="text" id="sh5vp-youtube_video_id" name="sh5vp-youtube_video_id" value="<?php print $instance['youtube_video_id']; ?>" /></td>
 </tr>
 
 <tr>
-	<td><label for="sh5vp-vimeo_video_id"><?php 
+	<td><label for="sh5vp-vimeo_video_id"><?php
 		_e('Vimeo video ID', 'secure-html5-video-player');
 	?>:</label></td>
 	<td><input type="text" id="sh5vp-vimeo_video_id" name="sh5vp-vimeo_video_id" value="<?php print $instance['vimeo_video_id']; ?>" /></td>
 </tr>
 
 <tr>
-	<td><label for="sh5vp-width"><?php 
+	<td><label for="sh5vp-width"><?php
 		_e('Width', 'secure-html5-video-player')
 	?>:</label></td>
 	<td><input type="text" id="sh5vp-width" name="sh5vp-width" value="<?php print $instance['width']; ?>" size="5" /> px</td>
-</tr>	
+</tr>
 <tr>
-	<td><label for="sh5vp-height"><?php 
+	<td><label for="sh5vp-height"><?php
 		_e('Height', 'secure-html5-video-player')
 	?>:</label></td>
 	<td><input type="text" id="sh5vp-height" name="sh5vp-height" value="<?php print $instance['height']; ?>" size="5"  /> px</td>
-</tr>	
+</tr>
 <tr>
 	<td></td>
 	<td>
-		<input type="checkbox" id="sh5vp-preload" name="sh5vp-preload" value="yes" <?php 
+		<input type="checkbox" id="sh5vp-preload" name="sh5vp-preload" value="yes" <?php
 	if ($instance['preload'] == 'yes') {
 		?> checked="checked" <?php
-	} 
+	}
 	?> />
-		<label for="sh5vp-preload"><?php 
+		<label for="sh5vp-preload"><?php
 		_e('Preload', 'secure-html5-video-player')
 		?></label>
 	</td>
-</tr>	
+</tr>
 <tr>
 	<td></td>
 	<td>
-		<input type="checkbox" id="sh5vp-autoplay" name="sh5vp-autoplay" value="yes" <?php 
+		<input type="checkbox" id="sh5vp-autoplay" name="sh5vp-autoplay" value="yes" <?php
 	if ($instance['autoplay'] == 'yes') {
 		?> checked="checked" <?php
-	} 
+	}
 	?> />
-		<label for="sh5vp-autoplay"><?php 
+		<label for="sh5vp-autoplay"><?php
 		_e('Autoplay', 'secure-html5-video-player')
 		?></label>
 	</td>
-</tr>	
+</tr>
 <tr>
 	<td></td>
 	<td>
-		<input type="checkbox" id="sh5vp-loop" name="sh5vp-loop" value="yes" <?php 
+		<input type="checkbox" id="sh5vp-loop" name="sh5vp-loop" value="yes" <?php
 	if ($instance['loop'] == 'yes') {
 		?> checked="checked" <?php
-	} 
+	}
 	?> />
-		<label for="sh5vp-loop"><?php 
+		<label for="sh5vp-loop"><?php
 		_e('Loop', 'secure-html5-video-player')
 		?></label>
 	</td>
 </tr>
 </table>
-<p><?php 
+<p><?php
 		_e('To use the video in your template, call the function: <code>get_sh5vp_featured_video($post_id, $width, $height)</code>, which returns the appropriate video tag.  Or call: <code>sh5vp_featured_video($post_id, $width, $height)</code> which prints the appropriate video tag.  The arguments: <code>$width</code> and <code>$height</code> are optional, and taken from the settings above if not specified.', 'secure-html5-video-player')
 ?></p>
 <?php
@@ -233,8 +250,9 @@ function get_sh5vp_featured_video($post_id, $arg_width = -1, $arg_height = -1) {
 	if (!$instance['video'] && !$instance['youtube_video_id'] && !$instance['vimeo_video_id']) {
 		return '';
 	}
+	$secure_html5_video_player_video_shortcode = get_option('secure_html5_video_player_video_shortcode', 'video');
 	return do_shortcode(
-		'[video file="'.$instance['video'].'" '
+		'['.$secure_html5_video_player_video_shortcode.' file="'.$instance['video'].'" '
 		.' youtube="'.$instance['youtube_video_id'].'" vimeo="'.$instance['vimeo_video_id'].'" '
 		.' preload="'.$instance['preload'].'" autoplay="'.$instance['autoplay'].'" loop="'.$instance['loop'].'" '
 		.' width="'.$instance['width'].'" height="'.$instance['height'].'"]'

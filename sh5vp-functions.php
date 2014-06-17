@@ -639,7 +639,7 @@ function secure_html5_video_player_options() {
 		__('See %s for additional information about VideoJS.', 'secure-html5-video-player'), 
 		'<a href="http://videojs.com/" target="_blank">videojs.com</a>'
 	);
-	print '<br/></p><br/>';
+	print '<br/></p><br/>';	
 
 	print '<div class="sh5vp_donate_box"><h3>';
 	_e('Donate', 'secure-html5-video-player');
@@ -761,6 +761,7 @@ function secure_html5_video_player_install() {
 	add_option('secure_html5_video_player_skin', 'tube');
 	add_option('secure_html5_video_player_key_seed', base64_encode(AUTH_KEY));
 	add_option('secure_html5_video_player_enable_download_fallback', 'yes');
+	add_option('secure_html5_video_player_video_shortcode', 'video');
 	
 	add_option('secure_html5_video_player_default_width', 640);
 	add_option('secure_html5_video_player_default_height', 480);
@@ -798,7 +799,8 @@ function secure_html5_video_player_uninstall() {
 	delete_option('secure_html5_video_player_key_seed');
 	delete_option('secure_html5_video_player_enable_flash_fallback');
 	delete_option('secure_html5_video_player_enable_download_fallback');
-
+	delete_option('secure_html5_video_player_video_shortcode');
+	
 	delete_option('secure_html5_video_player_default_width');
 	delete_option('secure_html5_video_player_default_height');
 	delete_option('secure_html5_video_player_default_preload');
@@ -844,6 +846,14 @@ function update_secure_html5_video_player_options() {
 	}
 	else {
 		update_option('secure_html5_video_player_enable_download_fallback', 'no');
+	}
+
+	if (isset($_REQUEST['secure_html5_video_player_video_shortcode'])) {
+		$new_video_shortcode = trim($_REQUEST['secure_html5_video_player_video_shortcode']);
+		if ($new_video_shortcode == '') {
+			$new_video_shortcode = 'video';
+			update_option('secure_html5_video_player_video_shortcode', $new_video_shortcode);
+		}
 	}
 	
 	if (isset($_REQUEST['secure_html5_video_player_default_width'])) {
@@ -1067,7 +1077,14 @@ function secure_html5_video_player_options_compatibility() {
 		value="always"
 		<?php print $secure_html5_video_player_enable_download_fallback_always ?>
 	 /><label for="secure_html5_video_player_enable_download_fallback_always"> <?php _e('Always', 'secure-html5-video-player'); ?></label><br />
-	<div class="inline_help"><?php _e('Allows you to enable or disable download links when the video cannot be played. Select [always] if download links should appear all the time.', 'secure-html5-video-player'); ?></div>
+	<div class="inline_help"><?php _e('Allows you to enable or disable download links when the video cannot be played. Select [always] if download links should appear all the time.', 'secure-html5-video-player'); ?></div><br/><br/>
+
+	<?php
+	$secure_html5_video_player_video_shortcode = get_option('secure_html5_video_player_video_shortcode', 'video');
+	?>
+	<label class="title" for='secure_html5_video_player_video_shortcode'><?php _e('Video Shortcode', 'secure-html5-video-player'); ?></label><br/>
+	<input type='text' id="secure_html5_video_player_video_shortcode" name='secure_html5_video_player_video_shortcode'  size='50' value='<?php echo $secure_html5_video_player_video_shortcode ?>' /><br/>
+	<small><?php _e('Allows you to define a custom shortcode name in the event that a different plugin or template has a conflict with using the [video] shortcode. If you set this to something other than the default, make sure to change all uses of the video shortcode in posts and pages.', 'secure-html5-video-player'); ?></small><br/><br/>
 	<?php
 }
 endif;
@@ -1890,14 +1907,15 @@ endif;
 
 
 
-function rcopy($source, $dest){
+if ( !function_exists('secure_html5_video_player_rcopy') ):
+function secure_html5_video_player_rcopy($source, $dest){
 	if (is_dir($source)) {
 		$dir_handle = opendir($source);
 		while ($file = readdir($dir_handle)) {
 			if ($file != "." && $file != "..") {
 				if (is_dir($source . "/" . $file)) {
 					mkdir($dest . "/" . $file);
-					rcopy($source . "/" . $file, $dest . "/" . $file);
+					secure_html5_video_player_rcopy($source . "/" . $file, $dest . "/" . $file);
 				}
 				else {
 					copy($source."/".$file, $dest."/".$file);
@@ -1910,6 +1928,7 @@ function rcopy($source, $dest){
 		copy($source, $dest);
 	}
 }
+endif;
 
 
 
@@ -1971,7 +1990,7 @@ function secure_html5_video_player_media_url($secure_html5_video_player_video_di
 		fclose($fp);
 	}
 
-	if (!file_exists($video_cache)) {
+	if (!file_exists($video_cache) || abs(filesize($video_orig) - filesize($video_cache)) > 512) {
 		copy($video_orig, $video_cache);
 	}
 	
@@ -2036,9 +2055,6 @@ endif;
 
 if ( !function_exists('secure_html5_video_player_admin_enqueue_scripts') ):
 function secure_html5_video_player_admin_enqueue_scripts($hook) {
-	if( 'settings_page_secure-html5-video-player/secure-html5-video-player' != $hook ) {
-		return;
-	}
 	$plugin_dir = plugins_url('secure-html5-video-player');
 	wp_register_style( 'sh5vp-admin-style', $plugin_dir . '/sh5vp-admin.css');
 	wp_enqueue_style( 'sh5vp-admin-style' );

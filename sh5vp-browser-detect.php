@@ -60,14 +60,12 @@ final class SH5VP_BrowserDetect {
 		static $_instance = NULL;
 		if (! $_agent) $_agent = $_SERVER['HTTP_USER_AGENT'];
 		if ($_instance === NULL || $_force || $_instance->agent() != $_agent) {
-			error_log('SH5VP_BrowserDetect.detect ' . $_SERVER["SCRIPT_FILENAME"]);
 			$_instance = new SH5VP_BrowserDetect($_agent);
 		}
 		return $_instance;
 	}
 
 	private function __construct($_agent) {
-		error_log('SH5VP_BrowserDetect.__construct ' . $_SERVER["SCRIPT_FILENAME"]);
 		$this->__agent = $_agent;
 		$this->__tokens = array();
 		{

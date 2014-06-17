@@ -3,7 +3,7 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
 Tested up to: 3.9.1
-Stable tag: 3.5
+Stable tag: 3.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,6 +127,12 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.6 =
+* Removed unnecessary error logging.
+* Added option to customize the video shortcode name.
+* Fixed an issue where cached video files aren't updated if changed within the cache limit time.
+* Added a FAQ for Amazon S3 configuration.
+
 = 3.5 =
 * Fixed a bug where OGV videos were not detected on Firefox browsers if there was no corresponding WEBM video.
 * Added donation button.
@@ -202,6 +208,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.6 =
+Removed unnecessary error logging. Added option to customize the video shortcode name. Fixed an issue where cached video files aren't updated if changed within the cache limit time. Added a FAQ for Amazon S3 configuration.
 
 = 3.5 =
 Fixed a bug where OGV videos were not detected on Firefox browsers if there was no corresponding WEBM video. Added donation button. Optimized browser detection.
@@ -280,3 +289,36 @@ We use the Secure HTML5 Video Player in conjunction with another plugin that han
 Another option is to use the built in features of Wordpress to password protect the post where the video short-tag is used.  
 
 Although this means that users that are granted access to a page have download permission for the videos in question, that would be the case for any video embedding technology, and certainly is the case for every HTML5 embedded video.  Anything that can be played on a computer screen can be recorded to a digital file for later playback with the right software or plugin.  We personally don't have a problem with them saving the mp4, if they are on a page that they are allowed to be on. For some websites, this could be viewed as a desirable feature. 
+
+= How do I configure the plugin to utilize Amazon S3? =
+
+1. Sign on to aws.amazon.com and go to the S3 page. If you haven't already done so, create a bucket with a specified region, and in the bucket, create a directory where all the videos will reside.
+
+2. Go to the top level bucket list in S3 and click on the magnifying glass icon to the left of the bucket name. This should reveal the properties of the bucket.
+
+3. In the properties of the bucket, make note of the "Region”. This is the physical location of the bucket in Amazon's network and maps to what S3 server you're using. Even if you think you've created the bucket with a certain region, sometimes that's not the case because Amazon had a bug before where it would create a bucket in the default region even if you specified a different one.
+
+4. If your intention is to secure the videos, make sure the permissions on the bucket don't have a permission level that lets everyone download the files in the bucket.
+
+5. Under the top user menu, select "Security Credentials” and then "Access Keys”. If you haven't done so already, create an access key and secret. If you forgot what the secret was, you will have to create a new one and write it down somewhere.
+
+6. In the WordPress admin settings, navigate to Settings -> Secure HTML5 Video Player, and then to the S3 tab.
+
+7. Check on the "enable simple storage service” setting.
+
+8. Under S3 server, select the region that matches the bucket region in step 3.
+
+9. Under Access Key and Secret Key, copy and paste in the values from step 5.
+
+10. Under S3 bucket, paste in the name of the bucket from step 1.
+
+11. Under S3 video directory, paste in the name of the directory from step 1.
+
+12. Save the options.
+
+13. In the S3 console (or with whatever program you use to upload files to S3), upload your video files the the S3 bucket video directory. For any given movie, the base file name should be the same across all of the different video formats you want to support and the same as the poster image. For ex: if you have a video name "myvid.mp4″ you should also have "myvid.ogv” and "myvid.jpg” to support Ogg and a JPG poster image. These media files should all have the same aspect ratio as well. All media files of the same video should be uploaded so that they're in the same directory.
+
+14. Make note of the directory where you uploaded the video. If you uploaded it to "video/myvid.mp4″ and "video” was your S3 video directory, then the name of the video "file”, as it is referred in the shortcode later, is "myvid”. You can also upload to a subdirectory, but then the name of the video file has to have the subdirectory's path prefixed to it. So if you uploaded it to: "video/a/b/c/myvid.mp4″ then the video file is "a/b/c/myvid”.
+
+15. In a WordPress post or page, insert in the short code of the video. From step 14, this is: [video file="myvid"]
+Save the post. The video should now be playable when you view the post in the website.
