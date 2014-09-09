@@ -2,8 +2,8 @@
 Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
-Tested up to: 3.9.1
-Stable tag: 3.6
+Tested up to: 4.0
+Stable tag: 3.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,6 +127,11 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.7 =
+* Added ability to preview videos in widget and metabox interfaces.
+* Added ability to insert short codes into posts from the metabox interface.
+* Fixed the link to the settings page from the plugin activation page.
+
 = 3.6 =
 * Removed unnecessary error logging.
 * Added option to customize the video shortcode name.
@@ -208,6 +213,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.7 =
+Added ability to preview videos in widget and metabox interfaces. Added ability to insert short codes into posts from the metabox interface. Fixed the link to the settings page from the plugin activation page.
 
 = 3.6 =
 Removed unnecessary error logging. Added option to customize the video shortcode name. Fixed an issue where cached video files aren't updated if changed within the cache limit time. Added a FAQ for Amazon S3 configuration.

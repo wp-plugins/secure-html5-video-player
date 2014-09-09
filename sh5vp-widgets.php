@@ -127,8 +127,9 @@ class secure_html5_video_player_widget extends WP_Widget {
 			?><select id="<?php print $this->get_field_id( 'video' ); ?>" name="<?php print $this->get_field_name( 'video' ); ?>" style="width:400px;">
 			<option value=""></option>
 <?php
+			$preview_key = secure_html5_video_player_accessKey('preview-iframe');
 			foreach ($video_files as $curr_video_file => $server_addr) {
-				?><option value="<?php print $curr_video_file; ?>" <?php
+				?><option data-key="<?php print $preview_key; ?>" value="<?php print $curr_video_file; ?>" <?php
 					if ($instance['video'] == $curr_video_file) {
 						?> selected="selected" <?php
 					} ?> ><?php
@@ -220,7 +221,43 @@ class secure_html5_video_player_widget extends WP_Widget {
 		_e('Caption (Text or HTML)', 'secure-html5-video-player')
 	?>:</label></td></tr>
 <tr><td colspan="2"><textarea id="<?php print $this->get_field_id( 'caption' ); ?>" name="<?php print $this->get_field_name( 'caption' ); ?>" rows="5" cols="29" class="widefat" ><?php print $instance['caption']; ?></textarea></td></tr>
+<tr><td colspan="2" class="sh5vp-widget-preview"><input type="button" class="button-secondary" value="<?php _e('Preview Video', 'secure-html5-video-player') ?>" 
+	onclick="sh5vp_previewVideo({
+		video: '<?php print $this->get_field_id( 'video' ); ?>',
+		youtube: '<?php print $this->get_field_id( 'youtube_video_id' ); ?>',
+		vimeo: '<?php print $this->get_field_id( 'vimeo_video_id' ); ?>',
+		width: '<?php print $this->get_field_id( 'width' ); ?>',
+		height: '<?php print $this->get_field_id( 'height' ); ?>',
+		preload: '<?php print $this->get_field_id( 'preload' ); ?>',
+		autoplay: '<?php print $this->get_field_id( 'autoplay' ); ?>',
+		loop: '<?php print $this->get_field_id( 'loop' ); ?>',
+		modal: '<?php print $this->get_field_id( 'modal' ); ?>'
+	});"/></td></tr>
 </table>
+
+<div class="sh5vp-video-modal" id="<?php print $this->get_field_id( 'modal' ); ?>" 
+	data-video-shortcode="<?php echo get_option('secure_html5_video_player_video_shortcode', 'video'); ?>" 
+	data-youtube_override_type="<?php echo get_option('secure_html5_video_player_youtube_override_type'); ?>"
+	data-plugin_dir="<?php echo plugins_url('secure-html5-video-player'); ?>"
+<?php 
+	foreach ($defaults as $key => $value) {
+		echo " data-default-{$key}=\"${value}\"";
+	}
+?> >
+	<div class="sh5vp-modal-bg"></div>
+	<div class="sh5vp-modal-inner">
+		<div class="sh5vp-modal-close"></div>
+		<h1 class="sh5vp-modal-title">Secure HTML5 Video Preview</h1>
+		<iframe class="sh5vp-modal-iframe" width="560" height="315" src="" frameborder="0" allowfullscreen scrolling="no"></iframe>
+		<div>
+			<table>
+				<tr><td class="sh5vp-preview-label">Video:</td><td class="sh5vp-preview-selected-video"></td></tr>
+				<tr><td class="sh5vp-preview-label">Youtube:</td><td class="sh5vp-preview-selected-youtube"></td></tr>
+				<tr><td class="sh5vp-preview-label">Vimeo:</td><td class="sh5vp-preview-selected-vimeo"></td></tr>
+			</table>
+		</div>
+	</div>
+</div>
 
 
 <?php

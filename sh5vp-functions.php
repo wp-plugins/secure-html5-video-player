@@ -56,15 +56,15 @@ function secure_html5_video_player_options_form_s3() {
 	if (!$secure_html5_video_player_s3_link_expire_units) $secure_html5_video_player_s3_link_expire_units = 'hours';
 	
 	$s3_servers = array(
-		's3.amazonaws.com', 'Amazon S3: US Standard (s3.amazonaws.com)',
-		's3-eu-west-1.amazonaws.com', 'Amazon S3: Ireland (s3-eu-west-1.amazonaws.com)',
-		's3-us-west-1.amazonaws.com', 'Amazon S3: Northern California (s3-us-west-1.amazonaws.com)',
-		's3-us-west-2.amazonaws.com', 'Amazon S3: Oregon (s3-us-west-2.amazonaws.com)',
-		's3-sa-east-1.amazonaws.com', 'Amazon S3: Sau Paulo (s3-sa-east-1.amazonaws.com)',
-		's3-ap-southeast-1.amazonaws.com', 'Amazon S3: Singapore (s3-ap-southeast-1.amazonaws.com)',
-		's3-ap-southeast-2.amazonaws.com', 'Amazon S3: Sydney (s3-ap-southeast-2.amazonaws.com)',
-		's3-ap-northeast-1.amazonaws.com', 'Amazon S3: Tokyo (s3-ap-northeast-1.amazonaws.com)',
-		'objects.dreamhost.com', 'DreamObjects (objects.dreamhost.com)',
+		's3.amazonaws.com', 'Amazon S3: US Standard',
+		's3-eu-west-1.amazonaws.com', 'Amazon S3: Ireland',
+		's3-us-west-1.amazonaws.com', 'Amazon S3: Northern California',
+		's3-us-west-2.amazonaws.com', 'Amazon S3: Oregon',
+		's3-sa-east-1.amazonaws.com', 'Amazon S3: Sau Paulo',
+		's3-ap-southeast-1.amazonaws.com', 'Amazon S3: Singapore',
+		's3-ap-southeast-2.amazonaws.com', 'Amazon S3: Sydney',
+		's3-ap-northeast-1.amazonaws.com', 'Amazon S3: Tokyo',
+		'objects.dreamhost.com', 'DreamObjects',
 		'other', 'Other:'
 	);
 	$s3_time_units = array(
@@ -103,7 +103,14 @@ function secure_html5_video_player_options_form_s3() {
 					$sel = ' selected="selected" ';
 					$found_sel_server = TRUE;
 				}
-				?><option <?php echo $sel; ?> value="<?php echo $s3_servers[$i]; ?>"><?php echo $s3_servers[$i+1]; ?></option><?php
+				?><option <?php echo $sel; ?> value="<?php echo $s3_servers[$i]; ?>"><?php 
+					echo $s3_servers[$i+1];
+					if ($s3_servers[$i] != 'other') {
+						echo ' (';
+						echo $s3_servers[$i];
+						echo ')';
+					}
+				?></option><?php
 			}
 		?>
 	</select><input type='text' size='50' name='secure_html5_video_player_s3_server_other' id='secure_html5_video_player_s3_server_other' value='<?php echo $secure_html5_video_player_s3_server; ?>' 
@@ -296,9 +303,7 @@ endif;
 
 if ( !function_exists('secure_html5_video_player_plugin_action_links') ):
 function secure_html5_video_player_plugin_action_links( $links, $file ) {
-	if ( $file == plugin_basename( dirname(__FILE__).'/secure-html5-video-player.php' ) ) {
-		$links[] = '<a href="options-general.php?page=secure-html5-video-player/secure-html5-video-player.php">'.__('Settings').'</a>';
-	}
+	array_unshift($links, '<a href="options-general.php?page=secure-html5-video-player">'.__('Settings').'</a>');
 	return $links;
 }
 add_filter( 'plugin_action_links', 'secure_html5_video_player_plugin_action_links', 10, 2 );
@@ -1927,6 +1932,47 @@ function secure_html5_video_player_rcopy($source, $dest){
 	else {
 		copy($source, $dest);
 	}
+}
+endif;
+
+
+
+if ( !function_exists('secure_html5_video_player_media_iframe_url') ):
+function secure_html5_video_player_media_iframe_url($opts) {
+	//$opts - hash with keys: file, youtube, vimeo, width, height, preload, autoplay, loop
+	$youtube_override_type = get_option('secure_html5_video_player_youtube_override_type');
+	if ('primary' == $youtube_override_type) {
+		if (secure_html5_video_player_youtube_exists($opts['youtube'])) {
+			$youtube = $opts['youtube'];
+			$autoplay_youtube = '0';
+			if ($opts['autoplay'] == 'yes' || $opts['autoplay'] == 'true') {
+				$autoplay_youtube = '1';
+			}
+			$origin = urlencode(site_url());
+			return "http://www.youtube.com/embed/{$youtube}?autoplay={$autoplay_youtube}&origin={$origin}";
+		}
+		else if (secure_html5_video_player_vimeo_exists($opts['vimeo'])) {
+			$vimeo = $opts['vimeo'];
+			$autoplay_vimeo = '0';
+			if ($opts['autoplay'] == 'yes' || $opts['autoplay'] == 'true') {
+				$autoplay_vimeo = '1';
+			}
+			$loop_vimeo = '0';
+			if ($opts['loop'] == 'yes' || $opts['loop'] == 'true') {
+				$loop_vimeo = '1';
+			}
+			return "http://player.vimeo.com/video/{$vimeo}?autoplay={$autoplay_vimeo}&amp;loop={$loop_vimeo}";
+		}
+	}
+	$access_key = secure_html5_video_player_accessKey($file);
+	$plugin_dir = plugins_url('secure-html5-video-player');
+	return "{$plugin_dir}/getiframe.php?k=" . urlencode($access_key) 
+		. "&file=" . urlencode($opts['file'])
+		. "&youtube=" . urlencode($opts['youtube'])
+		. "&vimeo=" . urlencode($opts['vimeo'])
+		. "&preload=" . urlencode($opts['preload'])
+		. "&autoplay=" . urlencode($opts['autoplay'])
+		. "&loop=" . urlencode($opts['loop']);
 }
 endif;
 
