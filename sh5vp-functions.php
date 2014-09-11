@@ -1987,6 +1987,7 @@ function secure_html5_video_player_media_url($secure_html5_video_player_video_di
 		$secure_html5_video_player_serve_method = 'file';
 	}
 	if ($secure_html5_video_player_serve_method == 'dynamic') {
+		file_get_contents("{$plugin_dir}/prepvideo.php?k=" . urlencode($access_key) . "&onlyclean=1&file=" . urlencode($file . '.' . $ext));
 		return $dynamic_url;
 	}
 
@@ -1998,9 +1999,7 @@ function secure_html5_video_player_media_url($secure_html5_video_player_video_di
 	$sh5vp_cache = secure_html5_video_player_parent_path_with_file(__FILE__, 'wp-config.php', 10) . '/wp-content/sh5vp_cache/';	
 	$sh5vp_cache_index = $sh5vp_cache . 'index.php';
 	if (!file_exists($sh5vp_cache_index)) {
-		$fp = fopen($sh5vp_cache_index, 'w');
-		fwrite($fp, "<?php \n// Silence is golden.\n?>");
-		fclose($fp);
+		secure_html5_video_player_write_silence_file($sh5vp_cache_index);
 	}
 	
 	$filename_normalized_ext = secure_html5_video_player_filename_normalized_ext($file . '.' . $ext);
@@ -2026,26 +2025,31 @@ function secure_html5_video_player_media_url($secure_html5_video_player_video_di
 	}
 	
 	if (!file_exists($video_cache_dir_index)) {
-		$fp = fopen($video_cache_dir_index, 'w');
-		fwrite($fp, "<?php \n// Silence is golden.\n?>");
-		fclose($fp);
+		secure_html5_video_player_write_silence_file($video_cache_dir_index);
 	}
 	if (!file_exists($video_cache_dir_index2)) {
-		$fp = fopen($video_cache_dir_index2, 'w');
-		fwrite($fp, "<?php \n// Silence is golden.\n?>");
-		fclose($fp);
+		secure_html5_video_player_write_silence_file($video_cache_dir_index2);
 	}
 
 	if (!file_exists($video_cache) || abs(filesize($video_orig) - filesize($video_cache)) > 512) {
-		copy($video_orig, $video_cache);
+		file_get_contents("{$plugin_dir}/prepvideo.php?k=" . urlencode($access_key) . "&file=" . urlencode($file . '.' . $ext));
 	}
 	
-	secure_html5_video_player_footer_cleanup();
 	if (file_exists($video_cache)) {
 		return content_url() . '/sh5vp_cache/' . $date_str . '/' . $access_key . '/' . $filename_normalized_ext;
 	}
 	return $dynamic_url;
 }
+endif;
+
+
+
+if ( !function_exists('secure_html5_video_player_write_silence_file') ):
+function secure_html5_video_player_write_silence_file($filepath) {
+	$fp = fopen($filepath, 'w');
+	fwrite($fp, "<?php \n// Silence is golden.\n?>");
+	fclose($fp);
+} 
 endif;
 
 
@@ -2082,16 +2086,17 @@ function secure_html5_video_player_footer_cleanup() {
 	$date_str_yesterday = date('Ymd', time() - 86400);
 	date_default_timezone_set($script_tz);
 
+	$secure_html5_video_player_serve_method = get_option('secure_html5_video_player_serve_method');
 	$sh5vp_cache = secure_html5_video_player_parent_path_with_file(__FILE__, 'wp-config.php', 10) . '/wp-content/sh5vp_cache/';	
 	$sh5vp_cache_ls = scandir($sh5vp_cache);
 	foreach ($sh5vp_cache_ls as $currdir) {
-		if ($currdir != $date_str 
-		&& $currdir != $date_str_yesterday
-		&& $currdir != '.' 
+		if ($currdir != '.' 
 		&& $currdir != '..' 
 		&& $currdir != 'index.php'
-		&& is_numeric($currdir)) {
-			secure_html5_video_player_rrmdir($sh5vp_cache . $currdir);
+		&& is_numeric($currdir)
+		&& ($secure_html5_video_player_serve_method == 'dynamic' 
+			|| $currdir != $date_str && $currdir != $date_str_yesterday)) {
+			secure_html5_video_player_rrmdir($sh5vp_cache . $currdir);			
 		}		
 	}
 }
