@@ -3,7 +3,7 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 3.7
+Stable tag: 3.8
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,6 +127,9 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.8 =
+* Optimized videos served over file cache using symbolic links.
+
 = 3.7 =
 * Added ability to preview videos in widget and metabox interfaces.
 * Added ability to insert short codes into posts from the metabox interface.
@@ -213,6 +216,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.8 =
+Optimized videos served over file cache using symbolic links.
 
 = 3.7 =
 Added ability to preview videos in widget and metabox interfaces. Added ability to insert short codes into posts from the metabox interface. Fixed the link to the settings page from the plugin activation page.
