@@ -1103,10 +1103,14 @@ function secure_html5_video_player_options_form_caching() {
 		$secure_html5_video_player_serve_method = 'file';
 	}
 	$secure_html5_video_player_serve_from_file = '';
+	$secure_html5_video_player_serve_from_file_link = '';
 	$secure_html5_video_player_serve_dynamically = '';
 	switch ($secure_html5_video_player_serve_method) {
 		case 'file':
 			$secure_html5_video_player_serve_from_file = 'checked="checked"';
+			break;
+		case 'link':
+			$secure_html5_video_player_serve_from_file_link = 'checked="checked"';
 			break;
 		case 'dynamic':
 			$secure_html5_video_player_serve_dynamically = 'checked="checked"';
@@ -1122,13 +1126,19 @@ function secure_html5_video_player_options_form_caching() {
 	 /><label for="secure_html5_video_player_serve_from_file"> <?php _e('Serve from cached files', 'secure-html5-video-player'); ?></label><br /><br />
 	<input type="radio" 
 		name="secure_html5_video_player_serve_method" 
+		id="secure_html5_video_player_serve_from_file_link"
+		value="link"
+		<?php print $secure_html5_video_player_serve_from_file_link ?>
+	 /><label for="secure_html5_video_player_serve_from_file_link"> <?php _e('Serve from cached files using symbolic links', 'secure-html5-video-player'); ?></label><br /><br />
+	<input type="radio" 
+		name="secure_html5_video_player_serve_method" 
 		id="secure_html5_video_player_serve_dynamically"
 		value="dynamic"
 		<?php print $secure_html5_video_player_serve_dynamically ?>
 	 /><label for="secure_html5_video_player_serve_dynamically"> <?php _e('Serve dynamically', 'secure-html5-video-player'); ?></label><br /><br />
-	<div class="inline_help"><?php _e('If [serve from cached files] is selected, the video files are copied as needed to a temporary cache directory, and served directly to the client using the webserver.  Otherwise, the original video files are loaded and served indirectly using PHP.', 'secure-html5-video-player'); ?></div><br/>
+	<div class="inline_help"><?php _e('If [serve from cached files] is selected, the video files are hard-linked (or copied) as needed to a temporary cache directory, and served directly to the client using the webserver.  Otherwise, the original video files are loaded and served indirectly using PHP.', 'secure-html5-video-player'); ?></div><br/>
 	<div class="inline_help"><?php _e('For hosting providers that place limits on the resources available to PHP, serving dynamically should not chosen because it would not scale well. Choose [serve from cached files] so that the act of serving the video files is handled by the webserver rather than by PHP.', 'secure-html5-video-player'); ?></div><br/>
-	<div class="inline_help"><?php _e('Caching requires considerable amount of free drive space - at most 2x the space of the videos being served.  If hard disk space is limited, select [serve dynamically].', 'secure-html5-video-player'); ?></div>
+	<div class="inline_help"><?php _e('Serving from cached files using symbolic links provides the same benefits as the other caching methodology. However, if your webserver is not configured to serve symbolically linked files, the videos will not be able to load properly. Use symbolic linked caching if the files cannot be hard-linked for whatever reason (ie. they are located in different filesystem from the website files).', 'secure-html5-video-player'); ?></div>
 	<?php
 }
 endif;
@@ -1519,6 +1529,7 @@ endif;
 if ( !function_exists('secure_html5_video_player_shortcode_video') ):
 function secure_html5_video_player_shortcode_video($atts) {
 	$bd = SH5VP_BrowserDetect::detect();
+	
 	$video_tag = '';
 	$count_file_exists = 0;
 
@@ -1749,7 +1760,6 @@ function secure_html5_video_player_shortcode_video($atts) {
 	
 		if ($poster) {
 			$poster_attribute = 'poster="'.$poster.'"';
-			$image_fallback = "<img src='$poster' width='$width' height='$height' alt='Poster Image' title='No video playback capabilities.' />";
 		}
 	
 		if ($preload == 'yes' || $preload == 'true') {
@@ -1818,19 +1828,19 @@ function secure_html5_video_player_shortcode_video($atts) {
 			if ($count_file_exists == 0) {
 				$video_tag .= "<!-- " . __('file not found', 'secure-html5-video-player') . ": {$secure_html5_video_player_video_dir}/{$file} -->\n";
 			}
-			else if ($bd->isFirefox() && $mp4 && !($ogg || $webm)) {
+			else if ($bd->isFirefox() && ($bd->versionFirefox() < 21 || $bd->isMac()) && $mp4 && !($ogg || $webm)) {
 				$video_tag .= "<iframe id='{$object_tag_id}' type='text/html' width='{$width}' height='{$height}' src='{$plugin_dir}/fallback/index.php?autoplay={$fallback_autoplay}&mp4={$fallback_mp4}&url={$fallback_plugin_dir}' frameborder='0' /></iframe>\n";
 			}
 			else {
 				$video_tag .= "<video class='video-js sh5vp-video' width='{$width}' height='{$height}' {$poster_attribute} {$controls_attribute} {$preload_attribute} {$autoplay_attribute} {$loop_attribute} >\n";
+				if ($mp4_source) {
+					$video_tag .= "{$mp4_source}\n";
+				}
 				if ($webm_source) {
 					$video_tag .= "{$webm_source}\n";
 				}
 				if ($ogg_source) {
 					$video_tag .= "{$ogg_source}\n";
-				}
-				if ($mp4_source) {
-					$video_tag .= "{$mp4_source}\n";
 				}
 				$video_tag .= "</video>\n";
 			}				
@@ -2126,9 +2136,15 @@ function secure_html5_video_player_can_play($has_mp4, $has_ogg, $has_webm) {
 		$can_play_webm = TRUE;
 	}
 	elseif ($bd->isFirefox()) {
-		$can_play_mp4 = FALSE;
-		$can_play_ogg = TRUE;
-		$can_play_webm = TRUE;
+		if ($bd->versionFirefox() >= 21 && !$bd->isMac()) {
+			$can_play_ogg = TRUE;
+			$can_play_webm = TRUE;
+		}
+		else {
+			$can_play_mp4 = FALSE;
+			$can_play_ogg = TRUE;
+			$can_play_webm = TRUE;
+		}	
 	}
 	return ($has_mp4 && $can_play_mp4) || ($has_ogg && $can_play_ogg) || ($has_webm && $can_play_webm);
 }

@@ -87,14 +87,22 @@ if ($_GET['onlyclean'] != '1') {
 	$in_progress_file = $video_cache . '.busy';
 	if (!file_exists($video_cache) 
 	|| abs(filesize($video_orig) - filesize($video_cache)) > 512 && !file_exists($in_progress_file)) {
+	
 		$fp = fopen($in_progress_file, 'w');
 		fwrite($fp, "1");
 		fclose($fp);
 		
-		if (!symlink($video_orig, $video_cache)) {
-			copy($video_orig, $video_cache);
+		$secure_html5_video_player_serve_method = get_option('secure_html5_video_player_serve_method');
+		if ($secure_html5_video_player_serve_method == 'link') {
+			if (!symlink($video_orig, $video_cache)) {
+				copy($video_orig, $video_cache);
+			}
 		}
-		
+		else {
+			if (!link($video_orig, $video_cache)) {
+				copy($video_orig, $video_cache);
+			}
+		}
 		unlink($in_progress_file);
 	}
 

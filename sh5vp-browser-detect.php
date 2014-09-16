@@ -47,6 +47,7 @@ final class SH5VP_BrowserDetect {
 	private $__isChrome;
 	private $__isSafari;
 	private $__isFirefox;
+	private $__versionFirefox;
 	private $__isOpera;
 	private $__isIE;
 	private $__versionIE;
@@ -54,8 +55,6 @@ final class SH5VP_BrowserDetect {
 
 	private $__tokens;
 	
-	//static $_instance = NULL;
-
 	public static function detect($_agent = '', $_force = FALSE) {
 		static $_instance = NULL;
 		if (! $_agent) $_agent = $_SERVER['HTTP_USER_AGENT'];
@@ -82,7 +81,7 @@ final class SH5VP_BrowserDetect {
 					}
 					if ($_curr_token != '') {
 						$tokenIndex += 1;
-						if (strpos(SH5VP_BrowserDetect::DIGITS, $_curr_token[0]) !== FALSE && $this->__tokens[$_last_token] && ( $_last_token == 'msie' || $_last_token == 'trident')) {
+						if (strpos(SH5VP_BrowserDetect::DIGITS, $_curr_token[0]) !== FALSE && $this->__tokens[$_last_token] && ( $_last_token == 'msie' || $_last_token == 'trident' || $_last_token == 'firefox')) {
 							$this->__tokens[$_last_token]['v'] = $_curr_token;
 						}
 						else {
@@ -122,6 +121,9 @@ final class SH5VP_BrowserDetect {
 		$this->__isChrome = isset( $this->__tokens['chrome'] ) || isset( $this->__tokens['crios'] );
 		$this->__isSafari = !$this->__isChrome && isset( $this->__tokens['safari'] );
 		$this->__isFirefox = isset( $this->__tokens['firefox'] );
+		if ($this->__isFirefox) {
+			$this->__versionFirefox = floor( floatval($this->__tokens['firefox']['v']) );
+		}		
 		$this->__isOpera = isset( $this->__tokens['opera'] );
 
 		$is_trident = isset( $this->__tokens['trident'] );
@@ -226,6 +228,10 @@ final class SH5VP_BrowserDetect {
 		return $this->__isFirefox;
 	}
 
+	public function versionFirefox() {
+		return $this->__versionFirefox;
+	}
+
 	public function isOpera() {
 		return $this->__isOpera;
 	}
@@ -244,7 +250,6 @@ final class SH5VP_BrowserDetect {
 	public function isMobileBrowser() {
 		return $this->__isMobileBrowser;
 	}
-
 
 }
 
