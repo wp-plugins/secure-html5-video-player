@@ -2056,6 +2056,11 @@ endif;
 
 if ( !function_exists('secure_html5_video_player_write_silence_file') ):
 function secure_html5_video_player_write_silence_file($filepath) {
+	$path_parts = pathinfo($filepath);
+	$path_dir = $path_parts['dirname'];
+	if (!is_dir($path_dir)) {
+		mkdir($path_dir, 0777, TRUE);
+	}
 	$fp = fopen($filepath, 'w');
 	fwrite($fp, "<?php \n// Silence is golden.\n?>");
 	fclose($fp);
