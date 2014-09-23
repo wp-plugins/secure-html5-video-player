@@ -3,7 +3,7 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 3.9
+Stable tag: 3.10
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,6 +127,9 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.10 =
+* Fixed Settings links in plugin list to prevent spilling over to other plugin items.
+
 = 3.9 =
 * Recognizes Firefox support for MP4 video playback.
 * Prioritizes MP4 video playback in the ordering of the video sources.
@@ -221,6 +224,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.10 =
+Fixed Settings links in plugin list to prevent spilling over to other plugin items.
 
 = 3.9 =
 Recognizes Firefox support for MP4 video playback. Prioritizes MP4 video playback in the ordering of the video sources. Added option to set the preference between 2 video file caching options: symbolic-linking and hard-linking/copying.

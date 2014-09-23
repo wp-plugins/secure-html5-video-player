@@ -4,7 +4,7 @@ Plugin Name: Secure HTML5 Video Player
 Plugin URI: http://www.trillamar.com/webcraft/secure-html5-video-player/
 Description: Secure HTML5 Video Player allows you to play HTML5 video on modern browsers. Videos can be served privately; pseudo-streamed from a secured directory or via S3. 
 Author: Lucinda Brown, Jinsoo Kang
-Version: 3.9
+Version: 3.10
 Author URI: http://www.trillamar.com/
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -39,6 +39,7 @@ require_once('sh5vp-init.php');
 
 register_activation_hook(__FILE__, 'secure_html5_video_player_install');
 
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'secure_html5_video_player_plugin_action_links', 10, 2);
 
 /**
 	Selects a media server from the list of available media servers using the client

@@ -306,7 +306,6 @@ function secure_html5_video_player_plugin_action_links( $links, $file ) {
 	array_unshift($links, '<a href="options-general.php?page=secure-html5-video-player">'.__('Settings').'</a>');
 	return $links;
 }
-add_filter( 'plugin_action_links', 'secure_html5_video_player_plugin_action_links', 10, 2 );
 endif;
 
 
