@@ -856,8 +856,8 @@ function update_secure_html5_video_player_options() {
 		$new_video_shortcode = trim($_REQUEST['secure_html5_video_player_video_shortcode']);
 		if ($new_video_shortcode == '') {
 			$new_video_shortcode = 'video';
-			update_option('secure_html5_video_player_video_shortcode', $new_video_shortcode);
 		}
+		update_option('secure_html5_video_player_video_shortcode', $new_video_shortcode);
 	}
 	
 	if (isset($_REQUEST['secure_html5_video_player_default_width'])) {
@@ -926,10 +926,10 @@ function update_secure_html5_video_player_options() {
 		update_option('secure_html5_video_player_enable_s3', 'no');
 	}
 	if (isset($_REQUEST['secure_html5_video_player_s3_access_key'])) {
-		update_option('secure_html5_video_player_s3_access_key', $_REQUEST['secure_html5_video_player_s3_access_key']);
+		update_option('secure_html5_video_player_s3_access_key', trim($_REQUEST['secure_html5_video_player_s3_access_key']));
 	}
 	if (isset($_REQUEST['secure_html5_video_player_s3_secret_key'])) {
-		update_option('secure_html5_video_player_s3_secret_key', $_REQUEST['secure_html5_video_player_s3_secret_key']);
+		update_option('secure_html5_video_player_s3_secret_key', trim($_REQUEST['secure_html5_video_player_s3_secret_key']));
 	}
 	if (isset($_REQUEST['secure_html5_video_player_s3_server'])) {
 		$sel_s3_server = $_REQUEST['secure_html5_video_player_s3_server'];
@@ -941,10 +941,10 @@ function update_secure_html5_video_player_options() {
 		}
 	}
 	if (isset($_REQUEST['secure_html5_video_player_s3_bucket'])) {
-		update_option('secure_html5_video_player_s3_bucket', $_REQUEST['secure_html5_video_player_s3_bucket']);
+		update_option('secure_html5_video_player_s3_bucket', trim($_REQUEST['secure_html5_video_player_s3_bucket']));
 	}
 	if (isset($_REQUEST['secure_html5_video_player_s3_video_dir'])) {
-		update_option('secure_html5_video_player_s3_video_dir', $_REQUEST['secure_html5_video_player_s3_video_dir']);
+		update_option('secure_html5_video_player_s3_video_dir', trim($_REQUEST['secure_html5_video_player_s3_video_dir']));
 	}
 
 	if (isset($_REQUEST['secure_html5_video_player_s3_link_expire'])) {
