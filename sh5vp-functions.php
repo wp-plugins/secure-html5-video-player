@@ -34,6 +34,9 @@ function secure_html5_video_player_s3_link_expire_seconds() {
 	else if ($secure_html5_video_player_s3_link_expire_units == 'minutes') {
 		$retval = $secure_html5_video_player_s3_link_expire * 60;
 	}
+	else {
+		$retval = $secure_html5_video_player_s3_link_expire;
+	}
 	$retval = intval(abs(round($retval)));
 	secure_html5_video_player_set_transient($transient_key, $retval);
 	return $retval;

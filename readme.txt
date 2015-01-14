@@ -3,7 +3,7 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 3.11
+Stable tag: 3.12
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,6 +127,9 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.12 =
+* Fixed a bug where saving S3 link expiration time would not get saved if units were set in seconds.
+
 = 3.11 =
 * Fixed custom short code setting so that it can be properly set to something other than "video".
 * Trimmed S3 setting strings to prevent a hard to track down key inconsistency that can arise from copy and pasting values.
@@ -228,6 +231,9 @@ Video Shortcode Examples
 
 
 == Upgrade Notice ==
+
+= 3.12 =
+Fixed a bug where saving S3 link expiration time would not get saved if units were set in seconds.
 
 = 3.11 =
 Fixed custom short code setting so that it can be properly set to something other than "video". Trimmed S3 setting strings to prevent a hard to track down key inconsistency that can arise from copy and pasting values.
