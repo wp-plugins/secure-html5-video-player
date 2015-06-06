@@ -427,26 +427,7 @@ function secure_html5_video_player_youtube_exists($youtube_video_id) {
 	if (! $youtube_video_id) {
 		return FALSE;
 	}
-	$secure_html5_video_player_youtube_override_type = get_option('secure_html5_video_player_youtube_override_type');
-	if ('never' == $secure_html5_video_player_youtube_override_type) {
-		return FALSE;
-	}
-
-	$transient_key = 'sh5vp:youtube:' . $youtube_video_id;
-	$exists = secure_html5_video_player_get_transient($transient_key);
-	if ($exists !== FALSE) {
-		return $exists == 'yes';
-	}
-	
-	$headers = get_headers("http://gdata.youtube.com/feeds/api/videos/{$youtube_video_id}?v=2");
-	if (strpos($headers[0], '200') > 0) {
-		$exists = 'yes';
-		secure_html5_video_player_set_transient($transient_key, $exists);
-		return TRUE;
-	}
-	$exists = 'no';
-	secure_html5_video_player_set_transient($transient_key, $exists);
-	return FALSE;
+	return TRUE;
 }
 endif;
 

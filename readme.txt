@@ -3,7 +3,7 @@ Contributors: Lucinda Brown, Jinsoo Kang
 Tags: html5, video, player, secure, javascript, m4v, mp4, ogg, ogv, theora, webm, skins, media server, youtube, vimeo, amazon, s3
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 3.12
+Stable tag: 3.13
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,6 +127,9 @@ Video Shortcode Examples
 
 == Changelog ==
 
+= 3.13 =
+* Fixed a bug Youtube embeds failed to render because of failure to load the Youtube API.
+
 = 3.12 =
 * Fixed a bug where saving S3 link expiration time would not get saved if units were set in seconds.
 
@@ -232,6 +235,9 @@ Video Shortcode Examples
 
 == Upgrade Notice ==
 
+= 3.13 =
+Fixed a bug Youtube embeds failed to render because of failure to load the Youtube API.
+
 = 3.12 =
 Fixed a bug where saving S3 link expiration time would not get saved if units were set in seconds.
 
@@ -271,10 +277,10 @@ Added ability to set the duration time for S3 media lifespan. Expanded the S3 se
 = 3.0 =
 Added support for Amazon S3 (and compatible file services) for video file storage and secured video serving.  Fixed an issue where uppercase file extension videos were not recognized. Optimized temporary value cache to use APC, if available.
 
-= 2.5 = 
+= 2.5 =
 Made file caching an optional setting over the legacy pseudo streaming via PHP. Organized settings into tabs. Added option to always display video download links. Improved fallback behavior with native skin. Added support for organization of videos into folders for secured video files. Optimized storage of featured video meta data. Fixed a typo in the help section.
 
-= 2.4 = 
+= 2.4 =
 Made file caching an optional setting over the legacy pseudo streaming via PHP. Organized settings into tabs. Added option to always display video download links. Improved fallback behavior with native skin. Added support for organization of videos into folders for secured video files. Optimized storage of featured video meta data.
 
 = 2.3 =
@@ -302,7 +308,7 @@ First release
 == Frequently Asked Questions ==
 
 = Why isn't it working in Firefox? =
-	
+
 Firefox currently does not support the MPEG4/h.264 video format that most other browsers and devices support.  Most versions of Firefox support the OGV (Ogg Vorbis Theora) video format, and some versions support the WEBM video format.  To achieve the greatest amount of compatiblity, you must provide videos in both OGV and MP4.  (WEBM is not necessary because every browser that supports WEBM playback supports one of the other video formats as well.)  The plugin automatically detects the presence of multiple video file formats as long as they have the same file name (differing by file extension), and as long as they're placed in the same video directory location of whatever way you're serving the videos.  If you're self serving the a video named "myvid.mp4" from a directory, you'll want to have the short code be:
 
 [video file="myvid"]
@@ -313,11 +319,11 @@ and then you will need to:
 3. Place the OGV video in the same video directory as the MP4 file, and name it "myvid.ogv"
 4. Make a placeholder image in PNG or JPEG format. We usually take a capture of the representative frame of the video.
 5. Name the PNG or JPEG placeholder image: "myvid.png" or "myvid.jpg", respectively, and place it in the same video directory.
-6. Test the page where you input the short code and make sure the video plays on all browsers.  
+6. Test the page where you input the short code and make sure the video plays on all browsers.
 
 = Why isn't it working in IE? =
 
-If your video is not playing in IE, then its likely your mp4 file is not in the proper encoding scheme compatible with HTML5 video. It has to be in MP4/h.264 format. See: <a href="http://diveintohtml5.info/video.html" target="_blank">http://diveintohtml5.info/video.html</a> for more information. 
+If your video is not playing in IE, then its likely your mp4 file is not in the proper encoding scheme compatible with HTML5 video. It has to be in MP4/h.264 format. See: <a href="http://diveintohtml5.info/video.html" target="_blank">http://diveintohtml5.info/video.html</a> for more information.
 
 = Why isn't it working in Safari? =
 
@@ -327,9 +333,9 @@ Besides the requirement of the video being MP4/h.264 format, some versions of Sa
 
 We use the Secure HTML5 Video Player in conjunction with another plugin that handles user accounts and page permissions granted to specific users. If the user has access to a page, they then have access to the video embedded on that page with a secure, randomized access URL created at the moment the page is served.  The URL to the media acts as a temporary license for viewing the video on the page for a set limited amount of time.  In this way, only members can see the videos, and non-members will not know how to access the videos, even if they know the file names.
 
-Another option is to use the built in features of Wordpress to password protect the post where the video short-tag is used.  
+Another option is to use the built in features of Wordpress to password protect the post where the video short-tag is used.
 
-Although this means that users that are granted access to a page have download permission for the videos in question, that would be the case for any video embedding technology, and certainly is the case for every HTML5 embedded video.  Anything that can be played on a computer screen can be recorded to a digital file for later playback with the right software or plugin.  We personally don't have a problem with them saving the mp4, if they are on a page that they are allowed to be on. For some websites, this could be viewed as a desirable feature. 
+Although this means that users that are granted access to a page have download permission for the videos in question, that would be the case for any video embedding technology, and certainly is the case for every HTML5 embedded video.  Anything that can be played on a computer screen can be recorded to a digital file for later playback with the right software or plugin.  We personally don't have a problem with them saving the mp4, if they are on a page that they are allowed to be on. For some websites, this could be viewed as a desirable feature.
 
 = How do I configure the plugin to utilize Amazon S3? =
 
